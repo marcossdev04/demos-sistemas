@@ -681,11 +681,24 @@ body.bk-mode .app,body.bk-mode .tabbar{display:none}
 .slots button:hover{border-color:var(--t);color:var(--t-ink)}
 .slots button.on{background:var(--t);border-color:var(--t);color:#fff}
 .slots button[disabled]{color:var(--ink3);text-decoration:line-through;border-style:dashed;opacity:.55;cursor:not-allowed}
-.bk-bar{position:sticky;bottom:0;z-index:5;margin-top:18px;background:color-mix(in oklab,var(--panel) 94%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:12px 0 calc(12px + env(safe-area-inset-bottom,0px))}
-.bk-bar .bk-in{display:flex;align-items:center;gap:10px}
-.bk-bar .tot{flex:1;min-width:0}
-.bk-bar .tot small{display:block;color:var(--ink3);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bk-bar .tot b{font-size:19px;font-weight:650;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.bk-card{overflow:clip}
+.bk-bar{position:sticky;bottom:0;z-index:5;display:flex;align-items:center;gap:14px;padding:14px 20px calc(14px + env(safe-area-inset-bottom,0px));background:color-mix(in oklab,var(--panel) 90%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid var(--line);box-shadow:0 -12px 24px -20px rgba(0,0,0,.35)}
+.bk-bar .tot{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.bk-bar .tot small{color:var(--ink3);font-size:12px;font-weight:550;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bk-bar .tot b{font-size:20px;font-weight:650;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.15;white-space:nowrap}
+.bk-bar .tot b.soft{font-size:15px;font-weight:600;color:var(--ink2);letter-spacing:0}
+.bk-bar .acts{display:flex;gap:8px;flex:none}
+.bk-bar .btn.lg{height:46px;border-radius:12px;font-size:14.5px}
+.bk-bar .btn.back{width:46px;padding:0;justify-content:center}
+.bk-bar .btn.go{padding:0 18px 0 22px;min-width:168px;justify-content:center;gap:6px}
+.bk-bar .btn.go[disabled]{opacity:1;background:var(--sunk);color:var(--ink3);border-color:transparent;box-shadow:none}
+@media (max-width:520px){
+  .bk-bar{flex-wrap:wrap;gap:10px;padding:12px 14px calc(12px + env(safe-area-inset-bottom,0px))}
+  .bk-bar .tot{flex:1 1 100%;flex-direction:row;align-items:baseline;justify-content:space-between;gap:12px}
+  .bk-bar .tot b{font-size:18px}
+  .bk-bar .acts{flex:1 1 100%}
+  .bk-bar .btn.go{flex:1;min-width:0}
+}
 .bk-ok{text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 0 2px}
 .bk-ok .big{width:66px;height:66px;border-radius:50%;background:var(--ok-bg);color:var(--ok);display:grid;place-items:center;margin-bottom:6px;animation:pop2 520ms var(--ease-out)}
 .bk-ok .big svg{width:32px;height:32px;stroke-width:2.4}
@@ -700,6 +713,7 @@ body.bk-mode .app,body.bk-mode .tabbar{display:none}
 a.btn{text-decoration:none}
 .drawer .phone{width:380px}
 .kc .more{text-align:left;font-weight:550}
+@media (max-width:420px){ .bk-steps span{white-space:nowrap} .bk-steps span:not(.on){font-size:0;gap:0} .bk-steps span.on{flex:1.6} }
 
 </style></head><body>
 <div class="app"><aside class="side" id="side" aria-label="Menu principal"></aside><div class="main"><header class="top" id="top"></header><main class="view" id="view"></main></div></div>
@@ -1771,15 +1785,25 @@ function renderBk() {
     const idx = PASSOS.findIndex(p => p[0] === C.step);
     const steps = `<div class="bk-steps">${PASSOS.map(([k, l], i) => `<span class="${i === idx ? 'on' : i < idx ? 'dn' : ''}"><i></i>${l}</span>`).join('')}</div>`;
     body = steps + `<div class="bk-body">${C.aviso ? `<div class="note wa">${ic('alert', 's')}<span>${C.aviso}</span></div>` : ''}${C.edit ? `<div class="note t">${ic('calclock', 's')}<span>Remarcando a reserva <b class="mono">${esc(resById(C.edit)?.cod || '')}</b>. Escolha o novo dia e horário.</span></div>` : ''}${({ veiculo: bkVeiculo, servico: bkServico, horario: bkHorario, dados: bkDados, revisar: bkRevisar })[C.step]()}</div>`;
-    bar = `<div class="bk-bar" id="bkbar">${bkBar()}</div>`;
+    bar = `<div class="bk-bar" id="bkbar">${bkBar()}</div>`; body += bar; bar = '';
   }
   $('#bk').innerHTML = `${head}<main class="bk-card">${body}</main><div class="bk-foot">Agendamento online · ${esc(empresa())}</div>${bar}`;
   if (C.step === 'horario') { const on = $('#bk .days button.on'); on && on.scrollIntoView({ block: 'nearest', inline: 'center' }); }
 }
 function bkBar() {
-  const o = C.serv && C.porte ? bkOrc() : null; const idx = PASSOS.findIndex(p => p[0] === C.step);
-  const resumo = !o ? 'Escolha o veículo e o serviço' : [servNome(C.serv), C.data && C.ini ? `${dataCurta(C.data)} às ${C.ini}` : `${o.dur} min`].join(' · ');
-  return `<div class="bk-in"><div class="tot"><small>${esc(resumo)}</small><b>${o ? brl(o.total) : 'R$ —'}</b></div>${idx > 0 ? `<button class="btn lg g" data-a="bkVoltar">Voltar</button>` : ''}<button class="btn lg p" data-a="${C.step === 'revisar' ? 'bkConfirma' : 'bkNext'}" ${bkValido() ? '' : 'disabled'}>${C.step === 'revisar' ? (C.edit ? 'Confirmar novo horário' : 'Confirmar reserva') : 'Continuar'}</button></div>`;
+  const idx = PASSOS.findIndex(p => p[0] === C.step);
+  const o = C.serv && C.porte && precoDe(C.serv, C.porte) != null ? bkOrc() : null;
+  let rotulo, valor;
+  if (o) {
+    const quando = idx >= 2 && C.data && C.ini ? `${dataCurta(C.data)}, ${C.ini}` : `${o.dur} min`;
+    rotulo = `${servNome(C.serv)} · ${quando}`; valor = brl(o.total);
+  } else if (C.porte) {
+    const ps = DB.servicos.filter(s => s.online && precoDe(s.id, C.porte) != null).map(s => precoDe(s.id, C.porte));
+    rotulo = porteN(C.porte); valor = ps.length ? `a partir de ${brl0(Math.min(...ps))}` : '—';
+  } else { rotulo = 'Total'; valor = 'Escolha o veículo'; }
+  const fim = C.step === 'revisar'; const lbl = fim ? (C.edit ? 'Confirmar horário' : 'Confirmar reserva') : 'Continuar';
+  return `<div class="tot"><small>${esc(rotulo)}</small><b class="${o ? '' : 'soft'}">${valor}</b></div>
+    <div class="acts">${idx > 0 ? `<button class="btn lg back" data-a="bkVoltar" aria-label="Voltar">${ic('arrowl')}</button>` : ''}<button class="btn lg p go" data-a="${fim ? 'bkConfirma' : 'bkNext'}" ${bkValido() ? '' : 'disabled'}>${lbl}${fim ? '' : ic('chevr', 's')}</button></div>`;
 }
 const bkBarUpdate = () => { const b = $('#bkbar'); if (b) b.innerHTML = bkBar(); };
 function bkVeiculo() {
