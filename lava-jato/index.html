@@ -643,172 +643,227 @@ a.btn{text-decoration:none}
 .kc .more{text-align:left;font-weight:550}
 
 
-/* ================= página de reserva do cliente ================= */
+
+
+
+
+/* ================= página de reserva do cliente: configurador ================= */
 body.bk-mode .app,body.bk-mode .tabbar{display:none}
 body.bk-mode{
-  --bx-bg:#EEF1F2;--bx-paper:#FFFFFF;--bx-ink:#15191C;--bx-ink2:#535E66;--bx-ink3:#869097;--bx-line:#D2D8DC;--bx-soft:color-mix(in oklab,var(--t) 7%,var(--bx-paper));
-  --bx-sans:'BxSans',var(--sans);--bx-disp:'BxDisplay','Impact',var(--sans);
-  background:var(--bx-bg);color:var(--bx-ink);font-family:var(--bx-sans);font-size:16px;line-height:1.5;
+  --g-bg:#0C0F12;--g-panel:#13171B;--g-panel2:#1A1F24;--g-line:#2A3138;--g-ink:#F1F3F4;--g-ink2:#A7B0B8;--g-ink3:#6E7881;
+  --acc:color-mix(in oklab,var(--t) 62%,#fff);--accbg:color-mix(in oklab,var(--t) 16%,var(--g-panel2));
+  --d:'BxDisplay','Impact',var(--sans);--s:'BxSans',var(--sans);
+  background:var(--g-bg);color:var(--g-ink);font-family:var(--s);font-size:15px;line-height:1.5;color-scheme:dark;
 }
-@media (prefers-color-scheme:dark){ body.bk-mode{--bx-bg:#121517;--bx-paper:#1B1F22;--bx-ink:#ECEFF1;--bx-ink2:#A6B0B7;--bx-ink3:#78838B;--bx-line:#30373C;--bx-soft:color-mix(in oklab,var(--t) 16%,var(--bx-paper))} }
-:root[data-theme="dark"] body.bk-mode{--bx-bg:#121517;--bx-paper:#1B1F22;--bx-ink:#ECEFF1;--bx-ink2:#A6B0B7;--bx-ink3:#78838B;--bx-line:#30373C;--bx-soft:color-mix(in oklab,var(--t) 16%,var(--bx-paper))}
-:root[data-theme="light"] body.bk-mode{--bx-bg:#EEF1F2;--bx-paper:#FFFFFF;--bx-ink:#15191C;--bx-ink2:#535E66;--bx-ink3:#869097;--bx-line:#D2D8DC;--bx-soft:color-mix(in oklab,var(--t) 7%,var(--bx-paper))}
-#bk{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
 #bk:empty{display:none}
-.bx{flex:1;width:min(680px,100%);margin:0 auto;padding:0 20px}
-:where(#bk button,#bk input){font-family:inherit}
-#bk .vh{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-#bk :focus-visible{outline:2px solid var(--t);outline-offset:2px}
+:where(#bk button,#bk input){font-family:inherit;color:inherit}
+#bk :focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.cf{display:grid;grid-template-columns:minmax(0,1fr) 440px;min-height:100vh;min-height:100dvh}
 
-/* topo */
-.bx-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 0 0}
-.bx-brand{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none;min-width:0}
-.bx-mark{font-family:var(--bx-disp);width:38px;height:38px;border-radius:9px;background:var(--t);color:#fff;display:grid;place-items:center;font-weight:400;font-size:14px;flex:none}
-.bx-brand b{display:block;font-size:15.5px;font-weight:700;line-height:1.2}
-.bx-brand small{display:block;font-size:13px;color:var(--bx-ink2);line-height:1.3}
-.bx-link{font-size:14px;font-weight:600;color:var(--bx-ink);text-decoration:underline;text-decoration-color:var(--bx-line);text-underline-offset:4px;text-decoration-thickness:2px;padding:8px 0;white-space:nowrap}
-.bx-link:hover{text-decoration-color:var(--t)}
+/* ---------- a garagem ---------- */
+.cf-stage{position:sticky;top:0;height:100vh;height:100dvh;overflow:hidden;isolation:isolate;
+  background:
+    radial-gradient(ellipse 60% 22% at 50% 76%,rgba(210,225,240,.13),transparent 70%),
+    linear-gradient(180deg,#1B2128 0%,#141A1F 61%,#0A0D10 61.2%,#0E1215 100%)}
+.cf-stage::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 90% 80% at 50% 55%,transparent 55%,rgba(0,0,0,.55));z-index:3}
+.cf-luzes{position:absolute;inset:0;pointer-events:none}
+.cf-luzes i{position:absolute;height:3px;border-radius:2px;background:linear-gradient(90deg,transparent,#F4F8FF 18%,#F4F8FF 82%,transparent);box-shadow:0 0 14px 3px rgba(190,215,255,.32),0 0 40px 8px rgba(190,215,255,.12);transform:rotate(-7deg)}
+.cf-luzes i:nth-child(1){top:7%;left:6%;width:38%}
+.cf-luzes i:nth-child(2){top:12%;left:30%;width:44%;opacity:.9}
+.cf-luzes i:nth-child(3){top:18%;left:52%;width:40%;opacity:.75}
+.cf-luzes i:nth-child(4){top:23%;left:12%;width:30%;opacity:.55}
+.cf-luzes i:nth-child(5){top:28%;left:60%;width:30%;opacity:.4}
+.cf-shead{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 28px}
+.cf-brand{display:flex;align-items:center;gap:10px;text-align:left}
+.cf-mark{width:36px;height:36px;border-radius:9px;background:var(--t);color:#fff;display:grid;place-items:center;font-family:var(--d);font-size:15px;flex:none}
+.cf-brand b{display:block;font-size:15px;font-weight:600;line-height:1.2}
+.cf-brand small{display:block;font-size:12.5px;color:var(--g-ink2)}
+.cf-link{font-size:13.5px;font-weight:600;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);white-space:nowrap}
+.cf-link:hover{background:rgba(255,255,255,.14)}
+.cf-word{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);font-family:var(--d);font-size:clamp(120px,19vw,320px);line-height:1;white-space:nowrap;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.11);letter-spacing:.01em;pointer-events:none;z-index:0}
+.cf-carro{position:absolute;left:5%;right:5%;bottom:20%;z-index:1;display:flex;justify-content:center}
+.cf-carro svg{width:min(100%,880px);height:auto;overflow:visible;-webkit-box-reflect:below -22px linear-gradient(transparent 58%,rgba(255,255,255,.2))}
+.car{opacity:0;transform:translateX(-70px);transition:opacity .4s ease,transform .7s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.cf-stage[data-porte="p"] .car[data-k="p"],.cf-stage[data-porte="m"] .car[data-k="m"],.cf-stage[data-porte="g"] .car[data-k="g"],.cf-stage[data-porte="moto"] .car[data-k="moto"],.cf-stage[data-porte="none"] .car[data-k="g"]{opacity:1;transform:none}
+.cf-stage[data-porte="none"] .car[data-k="g"]{--paint:#6B737A}
+.paint{fill:var(--paint);transition:fill .55s ease}
+.tom{fill:url(#g-tom)}
+.vinco{fill:none;stroke:rgba(255,255,255,.2);stroke-width:1.5}
+.vidro{fill:url(#g-vidro)}
+.vidro-reflexo{fill:url(#g-reflexo);opacity:.25;transition:opacity .7s}
+.cf-stage.vidros .vidro-reflexo{opacity:1}
+.coluna{stroke:rgba(0,0,0,.45);stroke-width:2.5}
+.caixa{fill:#07090B}
+.saia{fill:rgba(0,0,0,.32)}
+.espelho{fill:var(--paint);stroke:rgba(0,0,0,.35);stroke-width:1;transition:fill .55s ease}
+.macaneta{fill:rgba(0,0,0,.38)}
+.farol{fill:#EAF3FF;filter:drop-shadow(0 0 6px rgba(200,230,255,.9))}
+.lanterna{fill:#B8232A}
+.aromatizante{opacity:0;transition:opacity .4s}
+.aromatizante line{stroke:#d7dce0;stroke-width:1.2}
+.aromatizante path{fill:#3FA34D}
+.cf-stage.aroma .aromatizante{opacity:1}
+.lama{opacity:.95;transition:opacity 1s ease .35s}
+.poeira{fill:#6A5436;opacity:.5;transition:opacity 1s ease .35s}
+.lama-roda{fill:#5C4A33;opacity:.55;transition:opacity 1s ease .35s}
+.cf-stage.limpo .lama,.cf-stage.limpo .lama-roda,.cf-stage.limpo .poeira{opacity:0}
+.varredura{fill:url(#g-varre);opacity:0}
+.cf-stage.varrer .varredura{animation:varre 1.15s cubic-bezier(.5,0,.3,1)}
+@keyframes varre{0%{opacity:1;transform:translateX(0)}100%{opacity:1;transform:translateX(860px)}}
+path.cera{fill:none;stroke:#fff;stroke-width:2.5;stroke-linecap:round;opacity:0;transition:opacity .7s}
+.cf-stage.limpo path.cera{opacity:.18}
+.cf-stage.cera path.cera{opacity:.85;filter:drop-shadow(0 0 4px rgba(255,255,255,.8))}
+.pneu{fill:#17191C;transition:fill .5s}
+.cf-stage.pretinho .pneu{fill:#060708}
+.pneu-brilho{fill:none;stroke:#fff;stroke-width:2.2;stroke-linecap:round;opacity:0;transition:opacity .6s}
+.cf-stage.pretinho .pneu-brilho{opacity:.6}
+.aro{fill:#9BA3AA}
+.aro.moto{fill:none;stroke:#8D959C;stroke-width:3}
+.raio{stroke:#687077;stroke-width:5;stroke-linecap:round}
+.raio.fino{stroke-width:1.6}
+.cubo{fill:#454C52}
+.sombra{fill:rgba(0,0,0,.6);filter:blur(6px)}
+.quadro{fill:none;stroke:#2D3338;stroke-width:9;stroke-linecap:round}
+.motor{fill:#394046}
+.escape{stroke:#9AA3AA;stroke-width:7;stroke-linecap:round}
+.banco{fill:#111316}
+.guidao{stroke:#2A2F34;stroke-width:6;stroke-linecap:round}
+.cf-placa{position:absolute;right:32px;bottom:34px;z-index:4;width:156px;height:50px;border-radius:5px;background:#F7F8F9;border:2px solid #20252A;box-shadow:0 10px 24px rgba(0,0,0,.5);overflow:hidden;opacity:0;transform:translateY(10px) scale(.92);transition:opacity .35s,transform .45s cubic-bezier(.2,.8,.2,1)}
+.cf-placa.on{opacity:1;transform:none}
+.cf-placa i{display:block;height:13px;background:#1E4CA1;color:#fff;font-style:normal;font-size:8px;font-weight:700;letter-spacing:.32em;text-align:center;line-height:13px}
+.cf-placa b{display:block;text-align:center;font-size:25px;font-weight:700;letter-spacing:.1em;color:#15181B;line-height:33px}
+.cf-cap{position:absolute;left:32px;bottom:30px;z-index:4;max-width:min(52%,440px);display:flex;flex-direction:column;gap:2px}
+.cf-cap b{font-family:var(--d);font-weight:400;font-size:clamp(30px,3.6vw,46px);line-height:1;margin-bottom:6px}
+.cf-cap span{font-size:14.5px;color:var(--g-ink2)}
+.cf-cap em{font-style:normal;font-family:var(--d);font-size:30px;color:var(--acc);margin-top:6px;line-height:1}
+.cf-tag{position:absolute;right:28px;top:76px;z-index:4;font-size:13px;font-weight:600;padding:7px 12px;border-radius:999px;background:var(--accbg);color:var(--acc);border:1px solid color-mix(in oklab,var(--acc) 35%,transparent)}
 
-/* título */
-.bx-hero{padding:34px 0 8px}
-.bx-hero h1,.bx-done h1{font-family:var(--bx-disp);margin:0;font-size:clamp(42px,9.5vw,64px);font-weight:400;line-height:1;letter-spacing:.005em}
-.bx-hero p{margin:14px 0 0;max-width:54ch;color:var(--bx-ink2);font-size:16px}
-.bx-hero a{color:var(--bx-ink);font-weight:600;text-decoration:underline;text-decoration-color:var(--t);text-underline-offset:3px;text-decoration-thickness:2px}
-.bx-aviso{margin:18px 0 0;padding:12px 14px;border-left:3px solid var(--wa,#C98A00);background:var(--bx-paper);font-weight:550}
-.bx-aviso.ok{border-left-color:var(--ok,#15803D)}
+/* ---------- painel ---------- */
+.cf-panel{position:sticky;top:0;height:100vh;height:100dvh;display:flex;flex-direction:column;background:var(--g-panel);border-left:1px solid var(--g-line);overflow:auto}
+.cf-body{flex:1;padding:26px 28px 30px}
+.cf-prog{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:26px}
+.cf-prog button{display:flex;flex-direction:column;gap:7px;text-align:left;font-size:12px;font-weight:600;color:var(--g-ink3)}
+.cf-prog button i{display:block;height:3px;border-radius:2px;background:var(--g-line);transition:background-color .3s}
+.cf-prog button.feito{color:var(--g-ink2)}
+.cf-prog button.on{color:var(--g-ink)}
+.cf-prog button.on i,.cf-prog button.feito i{background:var(--acc)}
+.cf-prog button[disabled]{cursor:default}
+.cf-body h2{margin:0;font-family:var(--d);font-weight:400;font-size:36px;line-height:1.02;letter-spacing:.005em}
+.cf-sub{margin:8px 0 20px;color:var(--g-ink2);font-size:14.5px}
+.cf-body h3{margin:24px 0 10px;font-size:14px;font-weight:600;color:var(--g-ink2)}
+.cf-mini{margin:14px 0 0;font-size:13.5px;color:var(--g-ink3)}
+.cf-aviso{margin:0 0 16px;padding:10px 12px;border-radius:10px;background:rgba(201,138,0,.14);color:#F3C66A;font-size:14px;font-weight:550}
+.cf-aviso.ok{background:rgba(21,128,61,.16);color:#7FD6A0}
+.cf-nota{margin:0 0 16px;font-size:14px;color:var(--acc)}
+.cf-portes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cf-portes button{display:flex;flex-direction:column;gap:2px;padding:12px 14px 14px;border-radius:14px;background:var(--g-panel2);border:1.5px solid var(--g-line);text-align:left;transition:border-color .15s,background-color .15s,transform .12s}
+.cf-portes button:hover{border-color:#3A434B}
+.cf-portes button:active{transform:scale(.98)}
+.cf-portes svg{width:100%;height:50px;margin-bottom:8px;fill:#58626B;color:#58626B;transition:fill .2s}
+.cf-portes button.on{border-color:var(--acc);background:var(--accbg)}
+.cf-portes button.on svg{fill:var(--acc);color:var(--acc)}
+.cf-portes b{font-size:15px;font-weight:600}
+.cf-portes small{font-size:12px;color:var(--g-ink3);line-height:1.35}
+.cf-portes em{font-style:normal;font-size:12.5px;color:var(--acc);font-weight:600;margin-top:4px}
+.cf-cores{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.cf-cores button{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;border:2px solid transparent;transition:border-color .15s}
+.cf-cores button i{width:26px;height:26px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),inset 0 -6px 10px rgba(0,0,0,.28),inset 0 4px 6px rgba(255,255,255,.25)}
+.cf-cores button.on{border-color:var(--acc)}
+.cf-cores span{margin-left:6px;font-size:14px;color:var(--g-ink2)}
+.cf-opts{display:flex;flex-direction:column;gap:8px}
+.cf-opts button{display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:12px;align-items:start;padding:14px;border-radius:13px;background:var(--g-panel2);border:1.5px solid var(--g-line);text-align:left;transition:border-color .15s,background-color .15s}
+.cf-opts button:hover{border-color:#3A434B}
+.cf-opts button.on{border-color:var(--acc);background:var(--accbg)}
+.cf-rd{width:20px;height:20px;border-radius:50%;border:2px solid #4A535B;margin-top:1px;display:grid;place-items:center}
+.cf-opts.sq .cf-rd{border-radius:6px}
+.cf-opts button.on .cf-rd{border-color:var(--acc);background:var(--acc)}
+.cf-opts button.on .cf-rd::after{content:"";width:8px;height:8px;border-radius:50%;background:var(--g-panel)}
+.cf-opts.sq button.on .cf-rd::after{width:9px;height:5px;border-radius:0;background:none;border:2px solid var(--g-panel);border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.cf-ot{display:flex;flex-direction:column;min-width:0}
+.cf-ot b{font-size:15px;font-weight:600;line-height:1.3}
+.cf-ot small{font-size:13px;color:var(--g-ink2);line-height:1.4}
+.cf-ot small.t{color:var(--g-ink3);margin-top:3px}
+.cf-pr{font-family:var(--d);font-size:22px;line-height:1.1;white-space:nowrap}
+.cf-days{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 8px;margin:0 -2px;scroll-snap-type:x proximity;scrollbar-width:thin}
+.cf-days button{flex:none;width:58px;padding:8px 0 7px;border-radius:12px;background:var(--g-panel2);border:1.5px solid var(--g-line);display:flex;flex-direction:column;align-items:center;scroll-snap-align:start}
+.cf-days button small{font-size:11.5px;color:var(--g-ink2);font-weight:600}
+.cf-days button b{font-family:var(--d);font-weight:400;font-size:24px;line-height:1.1}
+.cf-days button em{font-style:normal;font-size:11px;color:var(--g-ink3)}
+.cf-days button.on{background:var(--t);border-color:var(--t);color:#fff}
+.cf-days button.on small,.cf-days button.on em{color:rgba(255,255,255,.85)}
+.cf-days button[disabled]{opacity:.4;cursor:not-allowed}
+.cf-times{display:grid;grid-template-columns:repeat(auto-fill,minmax(72px,1fr));gap:7px}
+.cf-times button{height:44px;border-radius:10px;background:var(--g-panel2);border:1.5px solid var(--g-line);font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+.cf-times button:hover{border-color:var(--acc)}
+.cf-times button.on{background:var(--t);border-color:var(--t);color:#fff}
+.cf-times button[disabled]{background:transparent;border-style:dashed;color:var(--g-ink3);text-decoration:line-through;font-weight:400;cursor:not-allowed}
+.cf-form{display:flex;flex-direction:column;gap:14px}
+.cf-2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:12px}
+.cf-f{display:flex;flex-direction:column;gap:6px}
+.cf-f>span{font-size:13.5px;font-weight:600;color:var(--g-ink2)}
+.cf-f>span i{font-style:normal;font-weight:400;color:var(--g-ink3);margin-left:4px}
+.cf-f input,.cf-search input{height:48px;padding:0 14px;border-radius:11px;border:1.5px solid var(--g-line);background:#0F1316;font-size:16px;width:100%;transition:border-color .15s,box-shadow .15s}
+.cf-f input::placeholder,.cf-search input::placeholder{color:#59636C}
+.cf-f input:focus,.cf-search input:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px color-mix(in oklab,var(--acc) 22%,transparent)}
+.cf-f.err input{border-color:#E06C5A}
+.cf-f.err>span::after{content:" é necessário";font-weight:500;color:#E9897A}
+.cf-plate{text-transform:uppercase;letter-spacing:.12em;font-weight:600}
+.cf-rec{margin:0;padding:10px 12px;border-radius:10px;background:var(--accbg);font-size:14px;color:var(--g-ink)}
+.cf-resumo{margin:22px 0 0;padding:14px 0 0;border-top:1px solid var(--g-line);display:grid;grid-template-columns:auto minmax(0,1fr);gap:7px 16px;font-size:14px}
+.cf-resumo dt{color:var(--g-ink3)}
+.cf-resumo dd{margin:0}
+.cf-foot{position:sticky;bottom:0;z-index:3;display:flex;align-items:center;gap:10px;padding:14px 28px calc(14px + env(safe-area-inset-bottom,0px));background:color-mix(in oklab,var(--g-panel) 92%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--g-line)}
+.cf-tot{flex:1;min-width:0;display:flex;flex-direction:column}
+.cf-tot b{font-family:var(--d);font-weight:400;font-size:28px;line-height:1.05;font-variant-numeric:tabular-nums}
+.cf-tot span{font-size:12.5px;color:var(--g-ink3)}
+.cf-back{width:48px;height:48px;border-radius:12px;border:1.5px solid var(--g-line);display:grid;place-items:center;flex:none}
+.cf-back:hover{border-color:#4A535B}
+.cf-go{height:48px;padding:0 26px;border-radius:12px;background:var(--t);color:#fff;font-size:16px;font-weight:600;flex:none;transition:opacity .15s,transform .12s}
+.cf-go:active{transform:scale(.98)}
+.cf-go.wait{opacity:.4}
+.cf-body .cf-done h2{font-size:52px}
+.cf-lead{margin:12px 0 0;font-size:18px;line-height:1.45}
+.cf-ticket{margin-top:22px;padding:16px 18px;border-radius:14px;border:1.5px dashed #3A434B;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+.cf-ticket span{font-size:13px;color:var(--g-ink2)}
+.cf-ticket b{font-family:var(--d);font-weight:400;font-size:40px;letter-spacing:.08em;line-height:1}
+.cf-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px}
+.cf-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:46px;padding:0 14px;border-radius:11px;border:1.5px solid var(--g-line);background:var(--g-panel2);font-size:14.5px;font-weight:600;color:var(--g-ink);text-decoration:none}
+.cf-btn:hover{border-color:#4A535B}
+.cf-inline{font-weight:600;color:var(--g-ink);text-decoration:underline;text-decoration-color:var(--acc);text-underline-offset:3px;text-decoration-thickness:2px;padding:0;font-size:inherit}
+.cf-inline.bad{color:#E9897A;text-decoration-color:#E9897A}
+.cf-search{display:flex;gap:8px}
+.cf-list{list-style:none;margin:20px 0 0;padding:0;border-top:1px solid var(--g-line)}
+.cf-list li{display:grid;grid-template-columns:54px minmax(0,1fr);gap:14px;padding:14px 0;border-bottom:1px solid var(--g-line)}
+.cf-when{display:flex;flex-direction:column;align-items:center;justify-content:center;height:58px;border-radius:10px;background:var(--g-panel2)}
+.cf-when b{font-family:var(--d);font-weight:400;font-size:26px;line-height:1}
+.cf-when span{font-size:11.5px;color:var(--g-ink2)}
+.cf-what{display:flex;flex-direction:column;gap:2px;min-width:0}
+.cf-what>b{font-size:16px;font-weight:600}
+.cf-what>span{font-size:13.5px;color:var(--g-ink2)}
+.cf-row{display:flex;gap:16px;margin-top:8px;font-size:14px}
 
-/* seções */
-.bx-sec{padding:34px 0 6px}
-.bx-sh{display:grid;grid-template-columns:34px minmax(0,1fr);gap:10px;align-items:start;margin-bottom:16px}
-.bx-n{font-family:var(--bx-disp);font-size:30px;font-weight:400;line-height:1;color:var(--t);padding-top:1px}
-.bx-n svg{width:24px;height:24px;stroke-width:3;margin-top:2px}
-.bx-sh h2{margin:0;font-size:21px;font-weight:700;line-height:1.2}
-.bx-sh p{margin:5px 0 0;color:var(--bx-ink2);font-size:14.5px;max-width:56ch}
-.bx-wait{margin:0;padding:18px 0 4px;color:var(--bx-ink3);font-size:15px;border-top:1px dashed var(--bx-line)}
-.bx-desc{margin:14px 0 0;font-size:15px;color:var(--bx-ink2);max-width:60ch}
-.bx-desc b{color:var(--bx-ink);font-weight:650}
-.bx-small{margin:16px 0 0;font-size:13.5px;color:var(--bx-ink3);max-width:60ch}
-.bx-inline{font-size:inherit;font-weight:600;color:var(--bx-ink);text-decoration:underline;text-decoration-color:var(--t);text-underline-offset:3px;text-decoration-thickness:2px;padding:0}
-.bx-inline.bad{text-decoration-color:var(--bad,#C2412D);color:var(--bad,#C2412D)}
-
-/* a tabela de preços */
-.bx-board{background:var(--bx-paper);border:1.5px solid var(--bx-ink);border-radius:8px;overflow:hidden}
-.bx-board table{width:100%;border-collapse:collapse;table-layout:fixed}
-.bx-board thead th{padding:12px 4px 10px;font-size:12.5px;font-weight:650;color:var(--bx-ink2);text-align:center;line-height:1.2;border-bottom:1.5px solid var(--bx-ink);position:relative}
-.bx-board thead th:first-child{width:36%}
-.bx-board thead th.on{color:var(--bx-ink)}
-.bx-board thead th.on::after{content:"";position:absolute;left:22%;right:22%;bottom:-1.5px;height:4px;background:var(--t);border-radius:2px 2px 0 0}
-.bx-board .short{display:none}
-.bx-board tbody tr+tr{border-top:1px solid var(--bx-line)}
-.bx-board tbody tr.on{background:var(--bx-soft)}
-.bx-board tbody th{text-align:left;padding:12px 8px 12px 16px;font-weight:400;vertical-align:middle}
-.bx-board tbody th b{display:block;font-size:15.5px;font-weight:650;line-height:1.25}
-.bx-board tbody th small{display:block;font-size:13px;color:var(--bx-ink3);margin-top:2px}
-.bx-board td{padding:5px 3px;text-align:center;vertical-align:middle}
-.bx-board td.na{color:var(--bx-ink3);font-size:18px}
-.bx-price{font-family:var(--bx-disp);width:100%;min-height:52px;border-radius:7px;display:inline-flex;align-items:flex-start;justify-content:center;gap:1px;padding-top:11px;font-size:25px;font-weight:400;line-height:1;font-variant-numeric:tabular-nums;color:var(--bx-ink);transition:background-color 140ms ease,color 140ms ease}
-.bx-price small{font-family:var(--bx-sans);font-size:11px;font-weight:650;margin-top:2px;color:var(--bx-ink3)}
-.bx-price:hover{background:color-mix(in oklab,var(--t) 12%,transparent)}
-.bx-price.on{background:var(--t);color:#fff}
-.bx-price.on small{color:rgba(255,255,255,.8)}
-.bx-price:active{transform:scale(.97)}
-
-/* extras */
-.bx-extras{margin-top:22px}
-.bx-q{margin:0 0 10px;font-weight:650;font-size:15.5px}
-.bx-chips{display:flex;flex-wrap:wrap;gap:8px}
-.bx-chip{display:inline-flex;align-items:center;gap:6px;height:38px;padding:0 13px;border-radius:999px;border:1.5px solid var(--bx-line);background:var(--bx-paper);font-size:14.5px;font-weight:550;color:var(--bx-ink);transition:border-color 140ms ease,background-color 140ms ease}
-.bx-chip span{color:var(--bx-ink3);font-weight:650}
-.bx-chip:hover{border-color:var(--bx-ink3)}
-.bx-chip.on{background:var(--bx-ink);border-color:var(--bx-ink);color:var(--bx-paper)}
-.bx-chip.on span{color:color-mix(in oklab,var(--bx-paper) 75%,transparent)}
-
-/* dias e horários */
-.bx-days{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 8px;margin:0 -2px;scroll-snap-type:x proximity;scrollbar-width:thin}
-.bx-days button{flex:none;width:60px;padding:8px 0 7px;border-radius:10px;background:var(--bx-paper);border:1.5px solid transparent;display:flex;flex-direction:column;align-items:center;scroll-snap-align:start;color:var(--bx-ink)}
-.bx-days button small{font-size:12px;color:var(--bx-ink2);font-weight:550}
-.bx-days button b{font-family:var(--bx-disp);font-size:26px;font-weight:400;line-height:1.05}
-.bx-days button em{font-style:normal;font-size:11.5px;color:var(--bx-ink3)}
-.bx-days button:hover{border-color:var(--bx-line)}
-.bx-days button.on{background:var(--t);color:#fff}
-.bx-days button.on small,.bx-days button.on em{color:rgba(255,255,255,.85)}
-.bx-days button[disabled]{background:transparent;opacity:.5;cursor:not-allowed}
-.bx-tg{margin-top:16px}
-.bx-tg>p{margin:0 0 8px;font-size:14px;font-weight:650;color:var(--bx-ink2)}
-.bx-times{display:grid;grid-template-columns:repeat(auto-fill,minmax(74px,1fr));gap:7px}
-.bx-times button{height:46px;border-radius:9px;border:1.5px solid var(--bx-line);background:var(--bx-paper);font-size:16px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--bx-ink)}
-.bx-times button:hover{border-color:var(--t)}
-.bx-times button.on{background:var(--t);border-color:var(--t);color:#fff}
-.bx-times button[disabled]{background:transparent;border-style:dashed;color:var(--bx-ink3);text-decoration:line-through;font-weight:500;cursor:not-allowed}
-
-/* formulário */
-.bx-form{display:flex;flex-direction:column;gap:14px;max-width:520px}
-.bx-2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:12px}
-.bx-f{display:flex;flex-direction:column;gap:6px}
-.bx-f>span{font-size:14px;font-weight:650}
-.bx-f>span i{font-style:normal;font-weight:450;color:var(--bx-ink3);margin-left:4px}
-.bx-f input,.bx-search input{height:50px;padding:0 14px;border-radius:10px;border:1.5px solid var(--bx-line);background:var(--bx-paper);color:var(--bx-ink);font-size:16px;width:100%;transition:border-color 140ms ease,box-shadow 140ms ease}
-.bx-f input::placeholder,.bx-search input::placeholder{color:var(--bx-ink3)}
-.bx-f input:focus,.bx-search input:focus{outline:none;border-color:var(--t);box-shadow:0 0 0 3px color-mix(in oklab,var(--t) 22%,transparent)}
-.bx-f.err input{border-color:var(--bad,#C2412D)}
-.bx-f.err>span::after{content:" é necessário";font-weight:500;color:var(--bad,#C2412D)}
-.bx-plate{text-transform:uppercase;letter-spacing:.12em;font-weight:600}
-.bx-rec{margin:0;padding:10px 14px;background:var(--bx-soft);border-radius:10px;font-size:14.5px}
-
-/* barra de reserva */
-.bx-bar{position:sticky;bottom:0;z-index:5;margin-top:32px;background:var(--bx-paper);border-top:1.5px solid var(--bx-ink);padding:12px 0 calc(12px + env(safe-area-inset-bottom,0px))}
-.bx-in{width:min(680px,100%);margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:16px}
-.bx-tot{flex:1;min-width:0;display:flex;flex-direction:column}
-.bx-tot b{font-family:var(--bx-disp);font-size:28px;font-weight:400;line-height:1.05;font-variant-numeric:tabular-nums}
-.bx-tot span{font-size:14px;color:var(--bx-ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bx-go{flex:none;height:52px;padding:0 30px;border-radius:10px;background:var(--t);color:#fff;font-size:17px;font-weight:700;transition:opacity 140ms ease,transform 120ms ease}
-.bx-go:active{transform:scale(.98)}
-.bx-go.wait{opacity:.45}
-
-/* confirmação e minhas reservas */
-.bx-done{padding:40px 0 10px}
-.bx-lead{margin:14px 0 0;font-size:19px;line-height:1.45;max-width:36ch}
-.bx-ticket{margin-top:26px;background:var(--bx-paper);border:1.5px solid var(--bx-ink);border-radius:8px;display:grid;grid-template-columns:150px minmax(0,1fr)}
-.bx-code{padding:18px;border-right:1.5px dashed var(--bx-line);display:flex;flex-direction:column;justify-content:center;gap:4px}
-.bx-code span{font-size:13px;color:var(--bx-ink2)}
-.bx-code b{font-family:var(--bx-disp);font-size:38px;font-weight:400;letter-spacing:.06em;line-height:1}
-.bx-ticket dl{margin:0;padding:16px 18px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px 16px;font-size:15px}
-.bx-ticket dt{color:var(--bx-ink3)}
-.bx-ticket dd{margin:0}
-.bx-acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
-.bx-btn{display:inline-flex;align-items:center;gap:8px;height:48px;padding:0 18px;border-radius:10px;border:1.5px solid var(--bx-line);background:var(--bx-paper);color:var(--bx-ink);font-size:15px;font-weight:650;text-decoration:none}
-.bx-btn:hover{border-color:var(--bx-ink3)}
-.bx-btn.solid{background:var(--t);border-color:var(--t);color:#fff}
-.bx-search{display:flex;gap:8px;margin-top:22px;max-width:520px}
-.bx-search .bx-btn{flex:none}
-.bx-list{list-style:none;margin:24px 0 0;padding:0;border-top:1.5px solid var(--bx-ink)}
-.bx-list li{display:grid;grid-template-columns:58px minmax(0,1fr);gap:14px;padding:16px 0;border-bottom:1px solid var(--bx-line)}
-.bx-when{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bx-paper);border-radius:9px;height:62px}
-.bx-when b{font-family:var(--bx-disp);font-size:28px;font-weight:400;line-height:1}
-.bx-when span{font-size:12px;color:var(--bx-ink2)}
-.bx-what{display:flex;flex-direction:column;gap:2px;min-width:0}
-.bx-what>b{font-size:17px;font-weight:700}
-.bx-what>span{font-size:14px;color:var(--bx-ink2)}
-.bx-row{display:flex;gap:18px;margin-top:8px;font-size:14.5px}
-.bx-foot{padding:40px 0 22px;font-size:13px;color:var(--bx-ink3)}
-
-@media (max-width:520px){
-  .bx{padding:0 16px}
-  .bx-in{padding:0 16px;gap:12px}
-  .bx-hero{padding-top:28px}
-  .bx-board thead th:first-child{width:33%}
-  .bx-board .full{display:none}.bx-board .short{display:inline}
-  .bx-board tbody th{padding:10px 4px 10px 12px}
-  .bx-board tbody th b{font-size:14.5px}
-  .bx-price{font-size:21px;min-height:48px;padding-top:10px}
-  .bx-price small{font-size:10px}
-  .bx-2{grid-template-columns:1fr}
-  .bx-go{padding:0 22px;height:50px}
-  .bx-tot b{font-size:25px}
-  .bx-ticket{grid-template-columns:1fr}
-  .bx-code{border-right:0;border-bottom:1.5px dashed var(--bx-line);flex-direction:row;align-items:baseline;justify-content:space-between}
+@media (max-width:1180px){ .cf{grid-template-columns:minmax(0,1fr) 400px} .cf-cap{max-width:52%} }
+@media (max-width:900px){
+  .cf{grid-template-columns:1fr}
+  .cf-stage{height:44vh;height:44dvh;min-height:270px;z-index:4;border-bottom:1px solid var(--g-line)}
+  .cf-panel{position:static;height:auto;overflow:visible;border-left:0}
+  .cf-shead{padding:14px 16px}
+  .cf-brand small{display:none}
+  .cf-carro{left:3%;right:3%;bottom:24%}
+  .cf-word{font-size:30vw;top:46%}
+  .cf-cap{left:16px;right:16px;bottom:12px;max-width:none;flex-direction:row;flex-wrap:wrap;align-items:baseline;column-gap:10px}
+  .cf-cap b{font-size:24px;margin:0}
+  .cf-cap span{display:none}
+  .cf-cap em{font-size:22px;margin:0 0 0 auto}
+  .cf-placa{bottom:auto;top:62px;left:auto;right:16px;transform:scale(.72);transform-origin:right top}
+  .cf-placa.on{transform:scale(.72)}
+  .cf-tag{display:none}
+  .cf-body{padding:20px 16px 26px}
+  .cf-foot{padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+  .cf-body h2{font-size:30px}
 }
-@media (prefers-reduced-motion:reduce){ #bk *{transition:none!important} }
+@media (max-width:400px){ .cf-2{grid-template-columns:1fr} .cf-acts{grid-template-columns:1fr} .cf-portes svg{height:40px} .cf-go{padding:0 20px} }
+@media (prefers-reduced-motion:reduce){ #bk *{transition:none!important;animation:none!important} }
 
 </style></head><body>
 <div class="app"><aside class="side" id="side" aria-label="Menu principal"></aside><div class="main"><header class="top" id="top"></header><main class="view" id="view"></main></div></div>
@@ -1850,162 +1905,289 @@ A.resetDemo = () => { resetDemo(); S.agData = TODAY; S.cxData = TODAY; rerender(
 
 /* ============================================================
    PÁGINA DE RESERVA DO CLIENTE  (#reservar)
-   Uma página só: tabela de preços → dia e horário → seus dados.
+   Configurador em etapas: o carro escolhido aparece na garagem
+   e muda conforme o cliente escolhe cor, lavagem e acabamentos.
    ============================================================ */
-const C = { step: 'form', porte: null, serv: null, adds: new Set(), leva: false, data: null, ini: null, nome: '', tel: '', placa: '', modelo: '', end: '', obs: '', edit: null, done: null, minhasTel: '', aviso: '', falta: '' };
-function enterBk() { MODE = 'bk'; closeDrawer(); closePop(); closePal(); document.body.classList.add('bk-mode'); renderBk(); scrollTo(0, 0); }
+const CORES_CARRO = [['branco', 'Branco', '#E8EBED'], ['prata', 'Prata', '#AEB5BB'], ['cinza', 'Cinza', '#5E666D'], ['preto', 'Preto', '#1C1F23'], ['vermelho', 'Vermelho', '#A3262D'], ['azul', 'Azul', '#25508E'], ['verde', 'Verde', '#2E5B45'], ['bege', 'Bege', '#C7B597']];
+const corCarro = k => CORES_CARRO.find(c => c[0] === k) || CORES_CARRO[1];
+const corNome = (k, porte) => { const n = corCarro(k)[1].toLowerCase(); return porte === 'moto' ? n.replace(/o$/, 'a') : n; };
+const PASSOS = [['veiculo', 'Veículo'], ['servico', 'Lavagem'], ['horario', 'Horário'], ['dados', 'Seus dados']];
+const C = { step: 'veiculo', porte: null, cor: 'prata', serv: null, adds: new Set(), leva: false, data: null, ini: null, nome: '', tel: '', placa: '', modelo: '', end: '', obs: '', edit: null, done: null, minhasTel: '', aviso: '' };
+function enterBk() { MODE = 'bk'; closeDrawer(); closePop(); closePal(); document.body.classList.add('bk-mode'); $('#bk').innerHTML = ''; renderBk(); scrollTo(0, 0); }
 function leaveBk() { MODE = 'admin'; document.body.classList.remove('bk-mode'); $('#bk').innerHTML = ''; }
 const bkCli = () => cliByTel(C.tel);
 function bkOrc() { const c = bkCli(); const pl = c && C.serv && C.data ? planoAplica(c.id, C.serv, C.data, C.edit) : null; return { ...orcamento({ serv: C.serv, porte: C.porte, adds: [...C.adds], leva: C.leva, plano: !!pl }), pl }; }
 function diasBk(dur) { return Array.from({ length: +DB.cfg.diasAFrente || 14 }, (_, i) => { const d = iso(addDays(TODAY_D, i)); const h = horasDe(d); const sl = h ? slotsDe(d, dur, C.edit) : []; return { d, h, livres: sl.filter(x => x.ok).length }; }); }
-const ok1 = () => !!(C.porte && C.serv && precoDe(C.serv, C.porte) != null);
-const ok2 = () => { if (!ok1() || !C.data || !C.ini) return false; const o = bkOrc(); return slotsDe(C.data, o.dur, C.edit).some(x => x.t === C.ini && x.ok); };
-const ok3 = () => C.nome.trim().length > 1 && dig(C.tel).length >= 10 && fmtPlaca(C.placa).length >= 7 && (!C.leva || C.end.trim().length > 4);
-const bkValido = () => ok1() && ok2() && ok3();
+const ok1 = () => !!C.porte;
+const ok2 = () => ok1() && !!C.serv && precoDe(C.serv, C.porte) != null;
+const ok3 = () => { if (!ok2() || !C.data || !C.ini) return false; const o = bkOrc(); return slotsDe(C.data, o.dur, C.edit).some(x => x.t === C.ini && x.ok); };
+const ok4 = () => C.nome.trim().length > 1 && dig(C.tel).length >= 10 && fmtPlaca(C.placa).length >= 7 && (!C.leva || C.end.trim().length > 4);
+const okPasso = s => ({ veiculo: ok1, servico: ok2, horario: ok3, dados: ok4 })[s]();
+const bkValido = () => ok1() && ok2() && ok3() && ok4();
 const horaCurta = t => t.endsWith(':00') ? t.slice(0, 2).replace(/^0/, '') + 'h' : t.replace(/^0/, '').replace(':', 'h');
+const curto = id => ({ moto: 'Moto', p: 'Hatch', m: 'Sedã', g: 'SUV' })[id] || 'Seu carro';
 
+/* ---------- os veículos (vista lateral, frente para a direita) ---------- */
+const CARROS = {
+  p: { body: 'M72 200 L66 160 Q64 140 80 128 L112 92 Q120 82 140 80 L300 78 Q330 79 350 92 L405 132 Q470 138 520 150 Q540 156 538 175 L536 200 L481 200 A43 43 0 0 0 395 200 L203 200 A43 43 0 0 0 117 200 Z',
+    win: 'M106 126 L132 93 Q139 87 154 87 L296 86 Q318 87 333 99 L366 127 Z', pil: [238], rodas: [160, 438], r: 38,
+    farol: 'M512 150 L534 157 L533 166 L514 162 Z', lanterna: 'M66 136 L80 132 L80 150 L67 152 Z', brilho: ['M148 96 Q240 88 320 94', 'M86 152 Q300 140 522 158'], aroma: [322, 98], esp: 'M364 118 L382 115 L387 128 L368 131 Z', mao: [256, 140], linha: 'M84 160 Q300 152 530 168' },
+  m: { body: 'M60 200 L56 168 Q58 150 80 146 L140 140 Q160 108 196 94 Q210 86 236 84 L336 84 Q360 86 380 100 L420 134 Q490 140 530 150 Q548 156 546 178 L544 200 L487 200 A43 43 0 0 0 401 200 L197 200 A43 43 0 0 0 111 200 Z',
+    win: 'M152 138 Q170 110 200 99 Q214 93 238 92 L334 92 Q352 93 366 105 L394 133 Z', pil: [272], rodas: [154, 444], r: 38,
+    farol: 'M522 151 L544 158 L543 167 L524 163 Z', lanterna: 'M56 150 L74 147 L74 162 L57 164 Z', brilho: ['M200 96 Q280 88 350 96', 'M74 158 Q300 146 536 160'], aroma: [352, 104], esp: 'M392 124 L411 121 L416 134 L396 137 Z', mao: [290, 146], linha: 'M70 166 Q300 156 540 170' },
+  g: { body: 'M58 200 L54 150 Q54 128 66 118 L92 70 Q98 60 118 58 L330 56 Q352 57 366 68 L412 112 Q480 118 530 128 Q548 134 548 160 L546 200 L489 200 A47 47 0 0 0 395 200 L205 200 A47 47 0 0 0 111 200 Z',
+    win: 'M80 114 L104 72 Q110 66 124 66 L326 64 Q344 65 356 77 L390 110 Z', pil: [196, 284], rodas: [158, 442], r: 42,
+    farol: 'M522 130 L546 137 L546 148 L524 144 Z', lanterna: 'M54 122 L66 120 L66 146 L55 148 Z', brilho: ['M122 62 Q230 56 320 60', 'M70 140 Q300 128 536 142'], aroma: [340, 76], esp: 'M388 99 L408 96 L413 111 L393 114 Z', mao: [214, 126], linha: 'M66 150 Q300 140 540 154' },
+};
+const MOTO_BODY = 'M248 148 Q266 106 328 100 L378 104 Q396 110 390 126 L344 150 Z M150 138 L210 126 L216 142 L156 148 Z M380 70 L412 64 L418 74 L388 80 Z';
+function rodaSvg(x, r, moto) {
+  const raios = moto ? Array.from({ length: 8 }, (_, i) => i * 45) : [0, 72, 144, 216, 288]; const ra = moto ? r * .72 : r * .58;
+  return `<g class="roda" transform="translate(${x} 200)"><circle r="${r}" class="pneu"/><path class="pneu-brilho" d="M${(-r * .72).toFixed(1)} ${(-r * .55).toFixed(1)} A${r * .9} ${r * .9} 0 0 1 ${(r * .2).toFixed(1)} ${(-r * .88).toFixed(1)}"/><circle r="${moto ? r * .76 : r * .62}" class="aro"/>${raios.map(a => `<line class="raio ${moto ? 'fino' : ''}" x1="0" y1="0" x2="${(ra * Math.cos(a * Math.PI / 180)).toFixed(1)}" y2="${(ra * Math.sin(a * Math.PI / 180)).toFixed(1)}"/>`).join('')}<circle r="${r * .16}" class="cubo"/><circle r="${r}" class="lama-roda"/></g>`;
+}
+function carSvg(k) {
+  const c = CARROS[k];
+  return `<g class="car" data-k="${k}">
+    <ellipse class="sombra" cx="300" cy="${200 + c.r}" rx="250" ry="10"/>
+    ${c.rodas.map(x => `<circle class="caixa" cx="${x}" cy="200" r="${c.r + 5}"/>`).join('')}
+    <use href="#b-${k}" class="paint"/><use href="#b-${k}" class="tom"/>
+    <g clip-path="url(#cl-${k})"><rect class="saia" x="0" y="185" width="600" height="30"/></g>
+    <path class="vinco" d="${c.linha}"/>
+    <path class="vidro" d="${c.win}"/><path class="vidro-reflexo" d="${c.win}"/>
+    <g clip-path="url(#cl-${k})">${c.pil.map(x => `<line class="coluna" x1="${x}" y1="40" x2="${x}" y2="200"/>`).join('')}</g>
+    <path class="espelho" d="${c.esp}"/><rect class="macaneta" x="${c.mao[0]}" y="${c.mao[1]}" width="20" height="4.5" rx="2.2"/>
+    <path class="farol" d="${c.farol}"/><path class="lanterna" d="${c.lanterna}"/>
+    <g class="aromatizante" transform="translate(${c.aroma[0]} ${c.aroma[1]})"><line x1="0" y1="0" x2="0" y2="9"/><path d="M0 9 L-6 22 L6 22 Z"/></g>
+    <use href="#b-${k}" class="poeira" mask="url(#m-lama)"/><use href="#b-${k}" class="lama" filter="url(#lama)" mask="url(#m-lama)"/>
+    <g clip-path="url(#cl-${k})"><rect class="varredura" x="-160" y="40" width="110" height="200"/></g>
+    ${c.brilho.map(d => `<path class="cera" d="${d}"/>`).join('')}
+    ${c.rodas.map(x => rodaSvg(x, c.r)).join('')}</g>`;
+}
+function motoSvg() {
+  return `<g class="car" data-k="moto"><ellipse class="sombra" cx="300" cy="240" rx="190" ry="9"/>
+    <path class="quadro" d="M175 200 L262 168 L330 160 M430 200 L398 96"/>
+    <rect class="motor" x="250" y="146" width="84" height="44" rx="8"/>
+    <path class="escape" d="M246 186 L128 172"/>
+    <use href="#b-moto" class="paint"/><use href="#b-moto" class="tom"/>
+    <path class="banco" d="M196 128 Q206 116 248 118 L300 116 Q302 127 290 132 L206 137 Z"/>
+    <path class="guidao" d="M384 86 L418 74"/>
+    <circle class="farol" cx="408" cy="106" r="9"/>
+    <use href="#b-moto" class="poeira" mask="url(#m-lama)"/><use href="#b-moto" class="lama" filter="url(#lama)" mask="url(#m-lama)"/>
+    <g clip-path="url(#cl-moto)"><rect class="varredura" x="-160" y="40" width="110" height="200"/></g>
+    <path class="cera" d="M270 112 Q310 102 360 106"/>
+    ${rodaSvg(175, 40, true)}${rodaSvg(430, 40, true)}</g>`;
+}
+function stageHtml() {
+  const h = horasDe(TODAY); const aberto = h && NOWMIN >= toMin(h[0]) && NOWMIN < toMin(h[1]);
+  return `<div class="cf-stage" id="cfStage" data-porte="none">
+    <header class="cf-shead"><button class="cf-brand" data-a="bkNova"><span class="cf-mark">${esc(sigla(empresa()))}</span><span><b>${esc(empresa())}</b><small>${aberto ? `Aberto agora, até ${horaCurta(h[1])}` : h ? `Hoje, das ${horaCurta(h[0])} às ${horaCurta(h[1])}` : 'Fechado hoje'}</small></span></button>
+      <button class="cf-link" id="cfLink" data-a="bkMinhas">Minhas reservas</button></header>
+    <div class="cf-luzes" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="cf-word" id="cfWord" aria-hidden="true">Seu carro</div>
+    <div class="cf-carro">
+      <svg viewBox="0 0 600 260" role="img" aria-label="Ilustração do veículo escolhido">
+        <defs>
+          ${Object.entries(CARROS).map(([k, c]) => `<path id="b-${k}" d="${c.body}"/><clipPath id="cl-${k}"><use href="#b-${k}"/></clipPath>`).join('')}
+          <path id="b-moto" d="${MOTO_BODY}"/><clipPath id="cl-moto"><use href="#b-moto"/></clipPath>
+          <linearGradient id="g-tom" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset=".42" stop-color="#fff" stop-opacity="0"/><stop offset=".7" stop-color="#000" stop-opacity=".05"/><stop offset="1" stop-color="#000" stop-opacity=".45"/></linearGradient>
+          <linearGradient id="g-vidro" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3B4650"/><stop offset="1" stop-color="#0B0F13"/></linearGradient>
+          <linearGradient id="g-reflexo" x1="0" y1="0" x2="1" y2="0"><stop offset=".25" stop-color="#fff" stop-opacity="0"/><stop offset=".45" stop-color="#CFE6FF" stop-opacity=".55"/><stop offset=".55" stop-color="#fff" stop-opacity="0"/></linearGradient>
+          <linearGradient id="g-varre" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+          <filter id="lama" x="0" y="0" width="1" height="1"><feTurbulence type="fractalNoise" baseFrequency=".13 .1" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 .33  0 0 0 0 .25  0 0 0 0 .16  4.2 0 0 0 -1.75"/><feComposite in2="SourceGraphic" operator="in"/></filter>
+          <linearGradient id="g-masc" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#000"/><stop offset=".35" stop-color="#444"/><stop offset=".75" stop-color="#fff"/></linearGradient>
+          <mask id="m-lama" maskContentUnits="objectBoundingBox"><rect width="1" height="1" fill="url(#g-masc)"/></mask>
+        </defs>
+        <g id="cfCars">${carSvg('p')}${carSvg('m')}${carSvg('g')}${motoSvg()}</g>
+      </svg>
+    </div>
+    <div class="cf-placa" id="cfPlaca" aria-hidden="true"><i>BRASIL</i><b>ABC1D23</b></div>
+    <div class="cf-cap" id="cfCap" aria-live="polite"></div>
+    <div class="cf-tag" id="cfTag" hidden>Buscamos e levamos</div>
+  </div>`;
+}
+function updStage() {
+  const st = $('#cfStage'); if (!st) return;
+  const det = C.serv === 'detalhada';
+  st.dataset.porte = C.porte || 'none';
+  st.style.setProperty('--paint', corCarro(C.cor)[2]);
+  const limpo = ok2();
+  if (limpo && !st.classList.contains('limpo')) { st.classList.add('limpo', 'varrer'); clearTimeout(st._t); st._t = setTimeout(() => st.classList.remove('varrer'), 1400); }
+  if (!limpo) st.classList.remove('limpo');
+  st.classList.toggle('cera', limpo && (C.adds.has('cera') || det));
+  st.classList.toggle('pretinho', limpo && (C.adds.has('pretinho') || det));
+  st.classList.toggle('vidros', limpo && (C.adds.has('vidros') || det));
+  st.classList.toggle('aroma', limpo && C.adds.has('aroma'));
+  $('#cfWord').textContent = C.porte ? curto(C.porte) : 'Seu carro';
+  const pl = fmtPlaca(C.placa); const pe = $('#cfPlaca'); pe.classList.toggle('on', pl.length >= 3); $('b', pe).textContent = pl || 'ABC1D23';
+  $('#cfTag').hidden = !C.leva;
+  const lk = $('#cfLink'); lk.dataset.a = C.step === 'minhas' ? 'bkNova' : 'bkMinhas'; lk.textContent = C.step === 'minhas' ? 'Nova reserva' : 'Minhas reservas';
+  const o = ok2() ? bkOrc() : null; const s = serv(C.serv) || {};
+  const extras = [...C.adds].map(a => (addOn(a) || {}).nome).filter(Boolean);
+  $('#cfCap').innerHTML = `<b>${C.porte ? `${curto(C.porte)} ${corNome(C.cor, C.porte)}` : 'Traga seu carro sujo.'}</b>
+    <span>${o ? esc(s.nome) + (extras.length ? ` com ${extras.map(x => x.toLowerCase()).join(', ')}` : '') : C.porte ? 'Escolha a lavagem e veja como ele sai.' : 'Monte a lavagem do seu jeito.'}</span>
+    ${ok3() ? `<span>${cap(dataCurta(C.data))}, ${ddmm(fromIso(C.data))} às ${C.ini}</span>` : ''}
+    ${o ? `<em>${brl(o.total)}</em>` : ''}`;
+}
+
+/* ---------- painel ---------- */
 function renderBk() {
   if (MODE !== 'bk') return;
   applyTheme(); document.title = `Agende sua lavagem · ${empresa()}`;
-  const h = horasDe(TODAY); const aberto = h && NOWMIN >= toMin(h[0]) && NOWMIN < toMin(h[1]);
-  const status = aberto ? `Aberto agora, até ${horaCurta(h[1])}.` : h ? `Hoje abre das ${horaCurta(h[0])} às ${horaCurta(h[1])}.` : 'Fechado hoje.';
-  const top = `<header class="bx-top"><a class="bx-brand" href="#reservar" data-a="bkNova"><span class="bx-mark">${esc(sigla(empresa()))}</span><span><b>${esc(empresa())}</b><small>${esc(CONFIG.segmento)}</small></span></a>
-    <button class="bx-link" data-a="${C.step === 'minhas' ? 'bkNova' : 'bkMinhas'}">${C.step === 'minhas' ? 'Fazer reserva' : 'Minhas reservas'}</button></header>`;
-  let main = '';
-  if (C.step === 'minhas') main = bkMinhas();
-  else if (C.step === 'ok') main = bkOk();
-  else main = `<section class="bx-hero"><h1>${C.edit ? 'Escolha o novo horário' : 'Agende sua lavagem'}</h1>
-      <p>${esc(DB.cfg.endereco)}. ${status} <a href="${waLink(DB.cfg.whatsapp, `Olá! Vim pela página de reserva da ${empresa()}.`)}" target="_blank" rel="noopener">Prefere conversar? Chame no WhatsApp.</a></p></section>
-    ${C.aviso ? `<div class="bx-aviso" role="alert">${C.aviso}</div>` : ''}
-    ${bkServico()}${bkHorario()}${bkDados()}`;
-  const bar = C.step === 'form' ? `<div class="bx-bar" id="bkbar">${bkBar()}</div>` : '';
-  $('#bk').innerHTML = `<div class="bx">${top}<main class="bx-main">${main}</main><footer class="bx-foot">${esc(empresa())}, ${esc(DB.cfg.endereco)}. WhatsApp ${fmtTel(DB.cfg.whatsapp)}.</footer></div>${bar}`;
-  const on = $('#bk .bx-days .on'); if (on) on.scrollIntoView({ block: 'nearest', inline: 'center' });
+  if (!$('#bk .cf')) $('#bk').innerHTML = `<div class="cf">${stageHtml()}<aside class="cf-panel" id="cfPanel"></aside></div>`;
+  const pan = $('#cfPanel'); const st = pan.scrollTop;
+  let corpo = '', pe = '';
+  if (C.step === 'minhas') corpo = bkMinhas();
+  else if (C.step === 'ok') corpo = bkOk();
+  else {
+    const idx = PASSOS.findIndex(p => p[0] === C.step);
+    corpo = `<nav class="cf-prog" aria-label="Etapa ${idx + 1} de ${PASSOS.length}">${PASSOS.map(([k, l], i) => `<button class="${i === idx ? 'on' : i < idx ? 'feito' : ''}" data-a="bkIr" data-k="${k}" ${i <= idx || PASSOS.slice(0, i).every(p => okPasso(p[0])) ? '' : 'disabled'} ${i === idx ? 'aria-current="step"' : ''}><i></i><span>${l}</span></button>`).join('')}</nav>
+      ${C.aviso ? `<div class="cf-aviso" role="alert">${C.aviso}</div>` : ''}
+      ${C.edit ? `<div class="cf-nota">Trocando o horário da reserva ${esc(resById(C.edit)?.cod || '')}.</div>` : ''}
+      ${({ veiculo: pVeiculo, servico: pServico, horario: pHorario, dados: pDados })[C.step]()}`;
+    pe = `<footer class="cf-foot" id="bkbar">${bkBar()}</footer>`;
+  }
+  pan.innerHTML = `<div class="cf-body">${corpo}</div>${pe}`;
+  pan.scrollTop = st;
+  updStage();
+  const on = $('#bk .cf-days .on'); if (on) on.scrollIntoView({ block: 'nearest', inline: 'center' });
 }
-function secao(n, titulo, done, inner, sub = '') {
-  return `<section class="bx-sec ${done ? 'done' : ''}" id="bx-s${n}"><div class="bx-sh"><span class="bx-n" aria-hidden="true">${done ? ic('check') : n}</span><div><h2>${titulo}</h2>${sub ? `<p>${sub}</p>` : ''}</div></div>${inner}</section>`;
+function miniSvg(k) {
+  if (k === 'moto') return `<svg viewBox="120 56 340 190" aria-hidden="true"><path d="${MOTO_BODY}"/><path d="M175 200 L262 168 L330 160 M430 200 L398 96" fill="none" stroke="currentColor" stroke-width="8"/><circle cx="175" cy="200" r="38"/><circle cx="430" cy="200" r="38"/></svg>`;
+  const c = CARROS[k]; return `<svg viewBox="40 46 520 200" aria-hidden="true"><path d="${c.body}"/>${c.rodas.map(x => `<circle cx="${x}" cy="200" r="${c.r - 3}"/>`).join('')}</svg>`;
 }
-function bkServico() {
-  const ss = DB.servicos.filter(s => s.online && PORTES.some(p => precoDe(s.id, p.id) != null));
-  const portes = PORTES.filter(p => ss.some(s => precoDe(s.id, p.id) != null));
-  const cell = (s, p) => { const v = precoDe(s.id, p.id); if (v == null) return `<td class="na"><span aria-label="Não fazemos">–</span></td>`; const on = C.serv === s.id && C.porte === p.id;
-    return `<td><button class="bx-price ${on ? 'on' : ''}" data-a="bkCell" data-s="${s.id}" data-p="${p.id}" aria-pressed="${on}" aria-label="${esc(s.nome)} para ${esc(p.nome)}: ${brl(v)}"><small>R$</small>${Math.round(v) === v ? v : n1(v)}</button></td>`; };
-  const sel = C.serv && serv(C.serv);
-  const board = `<div class="bx-board"><table><thead><tr><th scope="col"><span class="vh">Serviço</span></th>${portes.map(p => `<th scope="col" class="${C.porte === p.id ? 'on' : ''}"><span class="full">${p.nome.replace(' ou ', ' / ')}</span><span class="short">${p.nome.split(' ')[0]}</span></th>`).join('')}</tr></thead>
-    <tbody>${ss.map(s => `<tr class="${C.serv === s.id ? 'on' : ''}"><th scope="row"><b>${esc(s.nome)}</b><small>${durDe(s.id, 'm')} min</small></th>${portes.map(p => cell(s, p)).join('')}</tr>`).join('')}</tbody></table></div>`;
-  const desc = sel ? `<p class="bx-desc"><b>${esc(sel.nome)}, ${porteN(C.porte).toLowerCase()}:</b> ${esc(sel.desc.charAt(0).toLowerCase() + sel.desc.slice(1))}. Leva cerca de ${durDe(sel.id, C.porte)} minutos.</p>` : '';
+function pVeiculo() {
+  const portes = PORTES.filter(p => DB.servicos.some(s => s.online && precoDe(s.id, p.id) != null));
+  return `<h2>Qual é o seu veículo?</h2><p class="cf-sub">O preço e o tempo de lavagem mudam conforme o tamanho.</p>
+    <div class="cf-portes">${portes.map(p => { const ps = DB.servicos.filter(s => s.online && precoDe(s.id, p.id) != null).map(s => precoDe(s.id, p.id)); return `<button class="${C.porte === p.id ? 'on' : ''}" data-a="bkPorte" data-k="${p.id}" aria-pressed="${C.porte === p.id}">${miniSvg(p.id)}<b>${p.nome}</b><small>${p.ex}</small><em>a partir de ${brl0(Math.min(...ps))}</em></button>`; }).join('')}</div>
+    <h3>Cor ${C.porte === 'moto' ? 'da moto' : 'do carro'}</h3>
+    <div class="cf-cores">${CORES_CARRO.map(([k, n, hex]) => `<button class="${C.cor === k ? 'on' : ''}" data-a="bkCor" data-k="${k}" aria-pressed="${C.cor === k}" aria-label="${n}" title="${n}"><i style="background:${hex}"></i></button>`).join('')}<span>${corCarro(C.cor)[1]}</span></div>
+    <p class="cf-mini">A cor ajuda a equipe a reconhecer seu carro quando você chegar.</p>`;
+}
+function pServico() {
+  const ss = DB.servicos.filter(s => s.online && precoDe(s.id, C.porte) != null);
   const extras = DB.adicionais.filter(a => a.online);
-  const ext = ok1() && (extras.length || DB.cfg.levaTraz) ? `<div class="bx-extras"><p class="bx-q">Quer acrescentar algo?</p><div class="bx-chips">${extras.map(a => `<button class="bx-chip ${C.adds.has(a.id) ? 'on' : ''}" data-a="bkAdd" data-k="${a.id}" aria-pressed="${C.adds.has(a.id)}">${esc(a.nome)} <span>+${brl0(a.preco).replace('R$ ', 'R$')}</span></button>`).join('')}${DB.cfg.levaTraz ? `<button class="bx-chip ${C.leva ? 'on' : ''}" data-a="bkLeva" aria-pressed="${C.leva}">Buscar e levar o carro <span>+${brl0(DB.cfg.levaPreco).replace('R$ ', 'R$')}</span></button>` : ''}</div></div>` : '';
-  return secao(1, 'Toque no preço do seu carro', ok1(), board + desc + ext, 'O valor muda conforme o tamanho do veículo. Paga no local, no Pix, cartão ou dinheiro.');
+  return `<h2>Como ele vai sair daqui?</h2><p class="cf-sub">Preços para ${porteN(C.porte).toLowerCase()}. Paga no local, no Pix, cartão ou dinheiro.</p>
+    <div class="cf-opts">${ss.map(s => `<button class="${C.serv === s.id ? 'on' : ''}" data-a="bkServ" data-k="${s.id}" aria-pressed="${C.serv === s.id}"><span class="cf-rd"></span><span class="cf-ot"><b>${esc(s.nome)}</b><small>${esc(s.desc)}</small><small class="t">${durDe(s.id, C.porte)} min</small></span><span class="cf-pr">${brl0(precoDe(s.id, C.porte))}</span></button>`).join('')}</div>
+    ${C.serv && (extras.length || DB.cfg.levaTraz) ? `<h3>Acabamentos</h3><div class="cf-opts sq">${extras.map(a => `<button class="${C.adds.has(a.id) ? 'on' : ''}" data-a="bkAdd" data-k="${a.id}" aria-pressed="${C.adds.has(a.id)}"><span class="cf-rd"></span><span class="cf-ot"><b>${esc(a.nome)}</b>${a.dur ? `<small>mais ${a.dur} min</small>` : ''}</span><span class="cf-pr">+${brl0(a.preco)}</span></button>`).join('')}
+      ${DB.cfg.levaTraz ? `<button class="${C.leva ? 'on' : ''}" data-a="bkLeva" aria-pressed="${C.leva}"><span class="cf-rd"></span><span class="cf-ot"><b>Buscar e levar o carro</b><small>Pegamos no seu endereço e devolvemos limpo</small></span><span class="cf-pr">+${brl0(DB.cfg.levaPreco)}</span></button>` : ''}</div>` : ''}`;
 }
-function bkHorario() {
-  if (!ok1()) return secao(2, 'Dia e horário', false, `<p class="bx-wait">Escolha um serviço na tabela para ver os horários livres.</p>`);
+function pHorario() {
   const o = bkOrc(); const dias = diasBk(o.dur);
   if (!C.data || !dias.some(x => x.d === C.data && x.livres)) C.data = (dias.find(x => x.livres) || {}).d || null;
   const sl = C.data ? slotsDe(C.data, o.dur, C.edit).filter(x => !x.passado && x.cabe) : [];
-  const grupo = (nome, l) => l.length ? `<div class="bx-tg"><p>${nome}</p><div class="bx-times">${l.map(x => `<button class="${C.ini === x.t ? 'on' : ''}" data-a="bkIni" data-k="${x.t}" ${x.ok ? '' : `disabled aria-label="${x.t}, ocupado"`}>${x.t}</button>`).join('')}</div></div>` : '';
-  const strip = `<div class="bx-days" role="list">${dias.map(x => { const d = fromIso(x.d); return `<button role="listitem" class="${C.data === x.d ? 'on' : ''}" data-a="bkDia" data-k="${x.d}" ${x.livres ? '' : 'disabled'}><small>${x.d === TODAY ? 'hoje' : x.d === iso(addDays(TODAY_D, 1)) ? 'amanhã' : DOW[d.getDay()].toLowerCase()}</small><b>${d.getDate()}</b><em>${!x.h ? 'fechado' : x.livres ? MES[d.getMonth()] : 'lotado'}</em></button>`; }).join('')}</div>`;
-  const body = C.data ? `${strip}${grupo('Manhã', sl.filter(x => toMin(x.t) < 720))}${grupo('Tarde', sl.filter(x => toMin(x.t) >= 720))}${C.ini && ok2() ? `<p class="bx-desc">Chegue às ${C.ini}. O carro fica pronto por volta das ${fromMin(toMin(C.ini) + o.dur)}.</p>` : ''}` : `<p class="bx-wait">Não há horário livre nos próximos ${DB.cfg.diasAFrente} dias. Chame no WhatsApp que a gente encaixa.</p>`;
-  return secao(2, 'Dia e horário', ok2(), body, `Só aparecem horários com vaga para ${servNome(C.serv).toLowerCase()}.`);
+  const grupo = (nome, l) => l.length ? `<h3>${nome}</h3><div class="cf-times">${l.map(x => `<button class="${C.ini === x.t ? 'on' : ''}" data-a="bkIni" data-k="${x.t}" ${x.ok ? '' : `disabled aria-label="${x.t}, ocupado"`}>${x.t}</button>`).join('')}</div>` : '';
+  return `<h2>Quando você traz?</h2><p class="cf-sub">Leva cerca de ${o.dur} minutos. Só aparecem horários com vaga.</p>
+    ${C.data ? `<div class="cf-days">${dias.map(x => { const d = fromIso(x.d); return `<button class="${C.data === x.d ? 'on' : ''}" data-a="bkDia" data-k="${x.d}" ${x.livres ? '' : 'disabled'}><small>${x.d === TODAY ? 'hoje' : x.d === iso(addDays(TODAY_D, 1)) ? 'amanhã' : DOW[d.getDay()].toLowerCase()}</small><b>${d.getDate()}</b><em>${!x.h ? 'fechado' : x.livres ? MES[d.getMonth()] : 'lotado'}</em></button>`; }).join('')}</div>
+      ${grupo('Manhã', sl.filter(x => toMin(x.t) < 720))}${grupo('Tarde', sl.filter(x => toMin(x.t) >= 720))}
+      ${C.ini && ok3() ? `<p class="cf-mini">Chegue às ${C.ini}. Fica pronto por volta das ${fromMin(toMin(C.ini) + o.dur)}.</p>` : ''}`
+    : `<p class="cf-mini">Não há horário livre nos próximos ${DB.cfg.diasAFrente} dias. Chame no WhatsApp que a gente encaixa.</p>`}`;
 }
-function bkDados() {
-  const c = bkCli(); const s = c ? statsCli(c) : null;
-  const inner = `<div class="bx-form">
-    <label class="bx-f"><span>WhatsApp</span><input id="bk-t" data-i="bkTel" value="${esc(C.tel)}" placeholder="(11) 9 0000-0000" inputmode="tel" autocomplete="tel"></label>
-    <div id="bkRec">${bkRec(c, s)}</div>
-    <label class="bx-f"><span>Seu nome</span><input id="bk-n" data-i="bkNome" value="${esc(C.nome)}" autocomplete="name"></label>
-    <div class="bx-2"><label class="bx-f"><span>Placa</span><input id="bk-p" class="bx-plate" data-i="bkPlaca" value="${esc(C.placa)}" placeholder="ABC1D23" maxlength="8" autocomplete="off" autocapitalize="characters"></label>
-    <label class="bx-f"><span>Modelo e cor</span><input id="bk-m" data-i="bkModelo" value="${esc(C.modelo)}" placeholder="Onix prata"></label></div>
-    ${C.leva ? `<label class="bx-f"><span>Endereço para buscar o carro</span><input id="bk-e" data-i="bkEnd" value="${esc(C.end)}" placeholder="Rua, número e bairro" autocomplete="street-address"></label>` : ''}
-    <label class="bx-f"><span>Recado para a equipe <i>opcional</i></span><input id="bk-o" data-i="bkObs" value="${esc(C.obs)}" placeholder="Tem cadeirinha de bebê no banco de trás"></label></div>
-    <p class="bx-small">A confirmação chega no seu WhatsApp. Pode cancelar ou remarcar sem custo até ${DB.cfg.cancelHoras} ${DB.cfg.cancelHoras === 1 ? 'hora' : 'horas'} antes, em Minhas reservas.</p>`;
-  return secao(3, 'Seus dados', ok3(), inner);
+function pDados() {
+  const c = bkCli(); const o = bkOrc();
+  return `<h2>Pra quem é a reserva?</h2><p class="cf-sub">A confirmação e o aviso de carro pronto chegam no seu WhatsApp.</p>
+    <div class="cf-form">
+      <label class="cf-f"><span>WhatsApp</span><input id="bk-t" data-i="bkTel" value="${esc(C.tel)}" placeholder="(11) 9 0000-0000" inputmode="tel" autocomplete="tel"></label>
+      <div id="bkRec">${bkRec(c)}</div>
+      <label class="cf-f"><span>Seu nome</span><input id="bk-n" data-i="bkNome" value="${esc(C.nome)}" autocomplete="name"></label>
+      <div class="cf-2"><label class="cf-f"><span>Placa</span><input id="bk-p" class="cf-plate" data-i="bkPlaca" value="${esc(C.placa)}" placeholder="ABC1D23" maxlength="8" autocomplete="off" autocapitalize="characters"></label>
+      <label class="cf-f"><span>Modelo</span><input id="bk-m" data-i="bkModelo" value="${esc(C.modelo)}" placeholder="Ex.: Onix"></label></div>
+      ${C.leva ? `<label class="cf-f"><span>Endereço para buscar o carro</span><input id="bk-e" data-i="bkEnd" value="${esc(C.end)}" placeholder="Rua, número e bairro" autocomplete="street-address"></label>` : ''}
+      <label class="cf-f"><span>Recado para a equipe <i>opcional</i></span><input id="bk-o" data-i="bkObs" value="${esc(C.obs)}" placeholder="Tem cadeirinha de bebê no banco de trás"></label>
+    </div>
+    <dl class="cf-resumo"><dt>Veículo</dt><dd>${porteN(C.porte)}, ${corNome(C.cor, C.porte)}</dd><dt>Lavagem</dt><dd>${esc(servNome(C.serv))}${C.adds.size ? ` com ${[...C.adds].map(a => (addOn(a)?.nome || '').toLowerCase()).join(', ')}` : ''}${o.pl ? ' (incluso no seu plano)' : ''}</dd><dt>Quando</dt><dd>${cap(dataCurta(C.data))}, ${ddmm(fromIso(C.data))} às ${C.ini}</dd><dt>Onde</dt><dd>${C.leva ? 'Buscamos no seu endereço' : esc(DB.cfg.endereco)}</dd></dl>
+    <p class="cf-mini">Pode cancelar ou trocar o horário sem custo até ${DB.cfg.cancelHoras} ${DB.cfg.cancelHoras === 1 ? 'hora' : 'horas'} antes, em Minhas reservas.</p>`;
 }
-function bkRec(c, s) {
+function bkRec(c) {
   if (!c) return '';
-  const pl = C.serv && C.data ? planoAplica(c.id, C.serv, C.data, C.edit) : null;
-  const fid = s && s.visitas ? ` Esta vai ser a lavagem ${s.fid + 1} de ${DB.cfg.fidelidade} do seu cartão fidelidade.` : '';
-  return `<p class="bx-rec">Oi de novo, ${esc(c.nome.split(' ')[0])}. Já preenchemos seus dados.${pl ? ` O serviço está incluso no seu ${esc(pl.p.nome)}.` : ''}${fid}</p>`;
+  const s = statsCli(c); const pl = C.serv && C.data ? planoAplica(c.id, C.serv, C.data, C.edit) : null;
+  return `<p class="cf-rec">Oi de novo, ${esc(c.nome.split(' ')[0])}. Já preenchemos seus dados.${pl ? ` Esta lavagem está inclusa no seu ${esc(pl.p.nome)}.` : ''}${s.visitas ? ` Vai ser a lavagem ${s.fid + 1} de ${DB.cfg.fidelidade} do seu cartão fidelidade.` : ''}</p>`;
 }
 function bkBar() {
-  const fim = C.edit ? 'Confirmar horário' : 'Reservar';
-  let linha, total;
-  if (!ok1()) { linha = 'Escolha o serviço na tabela'; total = ''; }
-  else {
-    const o = bkOrc(); total = brl(o.total);
-    linha = !ok2() ? `${servNome(C.serv)}. Falta o horário` : !ok3() ? `${cap(dataCurta(C.data))} às ${C.ini}. Faltam seus dados` : `${servNome(C.serv)}, ${dataCurta(C.data)} às ${C.ini}`;
-  }
-  return `<div class="bx-in"><div class="bx-tot">${total ? `<b>${total}</b>` : ''}<span>${esc(cap(linha))}</span></div><button class="bx-go ${bkValido() ? '' : 'wait'}" data-a="bkGo">${fim}</button></div>`;
+  const idx = PASSOS.findIndex(p => p[0] === C.step); const fim = C.step === 'dados';
+  const o = ok2() ? bkOrc() : null;
+  const pode = fim ? bkValido() : okPasso(C.step);
+  const lbl = fim ? (C.edit ? 'Confirmar horário' : 'Reservar') : 'Continuar';
+  return `<div class="cf-tot">${o ? `<b>${brl(o.total)}</b><span>${o.dur} min de lavagem</span>` : `<span>Etapa ${idx + 1} de ${PASSOS.length}</span>`}</div>
+    ${idx > 0 ? `<button class="cf-back" data-a="bkVoltar" aria-label="Voltar">${ic('arrowl')}</button>` : ''}
+    <button class="cf-go ${pode ? '' : 'wait'}" data-a="${fim ? 'bkGo' : 'bkNext'}">${lbl}</button>`;
 }
 const bkBarUpdate = () => { const b = $('#bkbar'); if (b) b.innerHTML = bkBar(); };
-function rolarPara(id) { const el = $('#' + id); if (!el) return; const r = el.getBoundingClientRect(); if (r.top > innerHeight * .55 || r.top < 0) scrollTo({ top: scrollY + r.top - 16, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
 function bkOk() {
-  const r = resById(C.done); if (!r) { C.step = 'form'; return ''; }
-  const d = fromIso(r.data);
-  return `<section class="bx-done"><h1>${C.editou ? 'Horário trocado.' : 'Reservado.'}</h1>
-    <p class="bx-lead">Te esperamos ${dataCurta(r.data) === 'hoje' || dataCurta(r.data) === 'amanhã' ? dataCurta(r.data) : `${DOWL[d.getDay()]}, ${d.getDate()} de ${MESL[d.getMonth()]}`}, às ${r.ini}. O carro fica pronto por volta das ${fimDe(r)}.</p>
-    <div class="bx-ticket"><div class="bx-code"><span>Código da reserva</span><b>${r.cod}</b></div>
-      <dl><dt>Serviço</dt><dd>${esc(servNome(r.serv))}${r.adds.length ? `, com ${r.adds.map(a => (addOn(a)?.nome || '').toLowerCase()).join(' e ')}` : ''}</dd>
-      <dt>Carro</dt><dd>${esc(r.modelo)}, placa ${r.placa}</dd>
-      <dt>Onde</dt><dd>${r.leva ? `Buscamos em ${esc(r.end)}` : esc(DB.cfg.endereco)}</dd>
-      <dt>Total</dt><dd><b>${brl(r.valor)}</b>, pago no local</dd></dl></div>
-    <div class="bx-acts"><button class="bx-btn" data-a="bkIcs">${ic('calplus', 's')}Salvar na agenda do celular</button><a class="bx-btn" href="${waLink(DB.cfg.whatsapp, `Olá! Fiz a reserva ${r.cod} para ${dataCurta(r.data)} às ${r.ini}.`)}" target="_blank" rel="noopener">${ic('message', 's')}Falar no WhatsApp</a></div>
-    <p class="bx-small">Mandamos tudo isso no seu WhatsApp. <button class="bx-inline" data-a="bkNova">Fazer outra reserva</button> ou <button class="bx-inline" data-a="bkMinhas">ver minhas reservas</button>.</p></section>`;
+  const r = resById(C.done); if (!r) { C.step = 'veiculo'; return pVeiculo(); }
+  const d = fromIso(r.data); const quando = ['hoje', 'amanhã'].includes(dataCurta(r.data)) ? dataCurta(r.data) : `${DOWL[d.getDay()]}, ${d.getDate()} de ${MESL[d.getMonth()]}`;
+  return `<div class="cf-done"><h2>${C.editou ? 'Horário trocado.' : 'Reservado.'}</h2>
+    <p class="cf-lead">Te esperamos ${quando}, às ${r.ini}. Fica pronto por volta das ${fimDe(r)}.</p>
+    <div class="cf-ticket"><span>Código da reserva</span><b>${r.cod}</b></div>
+    <dl class="cf-resumo"><dt>Lavagem</dt><dd>${esc(servNome(r.serv))}${r.adds.length ? ` com ${r.adds.map(a => (addOn(a)?.nome || '').toLowerCase()).join(', ')}` : ''}</dd><dt>Veículo</dt><dd>${esc(r.modelo)}, placa ${r.placa}</dd><dt>Onde</dt><dd>${r.leva ? `Buscamos em ${esc(r.end)}` : esc(DB.cfg.endereco)}</dd><dt>Total</dt><dd><b>${brl(r.valor)}</b>, pago no local</dd></dl>
+    <div class="cf-acts"><button class="cf-btn" data-a="bkIcs">${ic('calplus', 's')}Salvar na agenda</button><a class="cf-btn" href="${waLink(DB.cfg.whatsapp, `Olá! Fiz a reserva ${r.cod} para ${dataCurta(r.data)} às ${r.ini}.`)}" target="_blank" rel="noopener">${ic('message', 's')}Falar no WhatsApp</a></div>
+    <p class="cf-mini">Mandamos tudo isso no seu WhatsApp. <button class="cf-inline" data-a="bkNova">Fazer outra reserva</button></p></div>`;
 }
 function bkMinhas() {
   const c = cliByTel(C.minhasTel);
   const rs = c ? DB.reservas.filter(r => r.cli === c.id && r.data >= TODAY && ['agendada', 'patio', 'lavando', 'pronto'].includes(r.st)).sort((a, b) => (a.data + a.ini < b.data + b.ini ? -1 : 1)) : [];
   const minAte = r => (fromIso(r.data) - TODAY_D) / 6e4 + toMin(r.ini) - NOWMIN;
   const buscou = dig(C.minhasTel).length >= 10;
-  return `<section class="bx-hero"><h1>Minhas reservas</h1><p>Digite o WhatsApp que você usou ao reservar.</p></section>
-    <div class="bx-search"><input id="bk-mt" data-i="bkMinTel" value="${esc(C.minhasTel)}" placeholder="(11) 9 0000-0000" inputmode="tel" aria-label="Seu WhatsApp"><button class="bx-btn solid" data-a="bkMinBusca">Buscar</button></div>
-    ${C.aviso ? `<div class="bx-aviso ok" role="status">${C.aviso}</div>` : ''}
-    ${buscou ? (rs.length ? `<ul class="bx-list">${rs.map(r => { const d = fromIso(r.data); const pode = minAte(r) > DB.cfg.cancelHoras * 60 && r.st === 'agendada'; return `<li><div class="bx-when"><b>${d.getDate()}</b><span>${MES[d.getMonth()]}</span></div>
-      <div class="bx-what"><b>${cap(dataCurta(r.data))} às ${r.ini}</b><span>${esc(servNome(r.serv))}, ${esc(r.modelo)} ${r.placa}</span><span>Código ${r.cod}${r.st !== 'agendada' ? `, ${ST[r.st][0].toLowerCase()}` : ''}</span>
-      <div class="bx-row">${pode ? `<button class="bx-inline" data-a="bkRemarcar" data-id="${r.id}">Trocar horário</button><button class="bx-inline bad" data-a="bkCancelar" data-id="${r.id}">Cancelar</button>` : r.st === 'agendada' ? `<span class="bx-small">Falta menos de ${DB.cfg.cancelHoras} ${DB.cfg.cancelHoras === 1 ? 'hora' : 'horas'}. Para mudar, chame no WhatsApp.</span>` : '<span class="bx-small">Seu carro já está com a gente.</span>'}</div></div></li>`; }).join('')}</ul>`
-      : `<p class="bx-wait">${c ? 'Você não tem reservas marcadas.' : 'Não achamos reservas com esse número.'} <button class="bx-inline" data-a="bkNova">Fazer uma reserva</button></p>`) : ''}`;
+  return `<h2>Minhas reservas</h2><p class="cf-sub">Digite o WhatsApp que você usou ao reservar.</p>
+    <div class="cf-search"><input id="bk-mt" data-i="bkMinTel" value="${esc(C.minhasTel)}" placeholder="(11) 9 0000-0000" inputmode="tel" aria-label="Seu WhatsApp"><button class="cf-go" data-a="bkMinBusca">Buscar</button></div>
+    ${C.aviso ? `<div class="cf-aviso ok" role="status">${C.aviso}</div>` : ''}
+    ${buscou ? (rs.length ? `<ul class="cf-list">${rs.map(r => { const d = fromIso(r.data); const pode = minAte(r) > DB.cfg.cancelHoras * 60 && r.st === 'agendada'; return `<li><div class="cf-when"><b>${d.getDate()}</b><span>${MES[d.getMonth()]}</span></div>
+      <div class="cf-what"><b>${cap(dataCurta(r.data))} às ${r.ini}</b><span>${esc(servNome(r.serv))}, ${esc(r.modelo)} ${r.placa}</span><span>Código ${r.cod}${r.st !== 'agendada' ? `, ${ST[r.st][0].toLowerCase()}` : ''}</span>
+      <div class="cf-row">${pode ? `<button class="cf-inline" data-a="bkRemarcar" data-id="${r.id}">Trocar horário</button><button class="cf-inline bad" data-a="bkCancelar" data-id="${r.id}">Cancelar</button>` : `<span class="cf-mini" style="margin:0">${r.st === 'agendada' ? `Falta menos de ${DB.cfg.cancelHoras}h. Para mudar, chame no WhatsApp.` : 'Seu carro já está com a gente.'}</span>`}</div></div></li>`; }).join('')}</ul>`
+      : `<p class="cf-mini">${c ? 'Você não tem reservas marcadas.' : 'Não achamos reservas com esse número.'} <button class="cf-inline" data-a="bkNova">Fazer uma reserva</button></p>`) : ''}`;
 }
-function bkResetForm() { Object.assign(C, { step: 'form', porte: null, serv: null, adds: new Set(), leva: false, data: null, ini: null, edit: null, done: null, aviso: '', editou: false }); }
-A.bkCell = el => { const prim = !ok1(); C.serv = el.dataset.s; C.porte = el.dataset.p; C.ini = null; C.aviso = ''; renderBk(); if (prim) setTimeout(() => rolarPara('bx-s1'), 0); };
+function bkResetForm() { Object.assign(C, { step: 'veiculo', porte: null, serv: null, adds: new Set(), leva: false, data: null, ini: null, edit: null, done: null, aviso: '', editou: false }); }
+function irPasso(k) {
+  C.step = k; C.aviso = ''; renderBk();
+  const p = $('#cfPanel'); if (p) p.scrollTop = 0;
+  if (innerWidth < 900 && p) { const y = p.getBoundingClientRect().top + scrollY - $('#cfStage').offsetHeight; if (scrollY > y) scrollTo({ top: y, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
+}
+A.bkIr = el => irPasso(el.dataset.k);
+A.bkPorte = el => { C.porte = el.dataset.k; if (C.serv && precoDe(C.serv, C.porte) == null) C.serv = null; C.aviso = ''; renderBk(); };
+A.bkCor = el => { C.cor = el.dataset.k; renderBk(); };
+A.bkServ = el => { C.serv = el.dataset.k; C.ini = null; C.aviso = ''; renderBk(); };
 A.bkAdd = el => { const k = el.dataset.k; C.adds.has(k) ? C.adds.delete(k) : C.adds.add(k); C.ini = null; renderBk(); };
 A.bkLeva = () => { C.leva = !C.leva; renderBk(); };
 A.bkDia = el => { C.data = el.dataset.k; C.ini = null; C.aviso = ''; renderBk(); };
-A.bkIni = el => { C.ini = el.dataset.k; C.aviso = ''; renderBk(); setTimeout(() => rolarPara('bx-s3'), 0); };
+A.bkIni = el => { C.ini = el.dataset.k; C.aviso = ''; renderBk(); };
+A.bkNext = () => {
+  if (!okPasso(C.step)) { C.aviso = { veiculo: 'Escolha o tipo de veículo para continuar.', servico: 'Escolha uma lavagem para continuar.', horario: 'Escolha o dia e o horário para continuar.' }[C.step]; renderBk(); return; }
+  const i = PASSOS.findIndex(p => p[0] === C.step); irPasso(PASSOS[i + 1][0]);
+};
+A.bkVoltar = () => { const i = PASSOS.findIndex(p => p[0] === C.step); irPasso(PASSOS[Math.max(0, i - 1)][0]); };
 A.bkGo = () => {
-  if (!ok1()) { rolarPara('bx-s1'); return; }
-  if (!ok2()) { rolarPara('bx-s2'); return; }
-  if (!ok3()) { rolarPara('bx-s3'); const f = !dig(C.tel) || dig(C.tel).length < 10 ? '#bk-t' : C.nome.trim().length < 2 ? '#bk-n' : fmtPlaca(C.placa).length < 7 ? '#bk-p' : '#bk-e'; const i = $(f); if (i) { i.closest('.bx-f').classList.add('err'); setTimeout(() => i.focus({ preventScroll: true }), 250); } return; }
+  if (!ok3()) { irPasso('horario'); return; }
+  if (!ok4()) { const f = dig(C.tel).length < 10 ? '#bk-t' : C.nome.trim().length < 2 ? '#bk-n' : fmtPlaca(C.placa).length < 7 ? '#bk-p' : '#bk-e'; const i = $(f); if (i) { i.closest('.cf-f').classList.add('err'); i.focus(); } return; }
   bkConfirma();
 };
 IN.bkTel = el => {
   C.tel = el.value; const c = bkCli();
-  if (c) { const v = c.veics.find(x => x.porte === C.porte) || c.veics[0]; if (!C.nome) { C.nome = c.nome; $('#bk-n').value = c.nome; } if (!C.placa && v) { C.placa = v.placa; $('#bk-p').value = v.placa; } if (!C.modelo && v) { C.modelo = `${v.modelo}${v.cor ? ' ' + v.cor.toLowerCase() : ''}`; $('#bk-m').value = C.modelo; } }
-  $('#bkRec').innerHTML = bkRec(c, c ? statsCli(c) : null); el.closest('.bx-f').classList.remove('err'); bkBarUpdate();
+  if (c) { const v = c.veics.find(x => x.porte === C.porte) || c.veics[0]; if (!C.nome) { C.nome = c.nome; $('#bk-n').value = c.nome; } if (!C.placa && v) { C.placa = v.placa; $('#bk-p').value = v.placa; } if (!C.modelo && v) { C.modelo = v.modelo; $('#bk-m').value = v.modelo; } if (v && v.cor) { const k = CORES_CARRO.find(x => v.cor.toLowerCase().slice(0, 4) === x[1].toLowerCase().slice(0, 4)); if (k) C.cor = k[0]; } updStage(); }
+  $('#bkRec').innerHTML = bkRec(c); el.closest('.cf-f').classList.remove('err'); bkBarUpdate();
 };
-const limpaErr = el => el.closest('.bx-f')?.classList.remove('err');
+const limpaErr = el => el.closest('.cf-f')?.classList.remove('err');
 IN.bkNome = el => { C.nome = el.value; limpaErr(el); bkBarUpdate(); };
-IN.bkPlaca = el => { C.placa = el.value.toUpperCase(); limpaErr(el); bkBarUpdate(); };
+IN.bkPlaca = el => { C.placa = el.value.toUpperCase(); limpaErr(el); bkBarUpdate(); updStage(); };
 IN.bkModelo = el => { C.modelo = el.value; };
 IN.bkEnd = el => { C.end = el.value; limpaErr(el); bkBarUpdate(); };
 IN.bkObs = el => { C.obs = el.value; };
 IN.bkMinTel = el => { C.minhasTel = el.value; };
-A.bkMinhas = () => { C.step = 'minhas'; C.aviso = ''; if (!C.minhasTel && C.tel) C.minhasTel = C.tel; renderBk(); scrollTo(0, 0); };
+A.bkMinhas = () => { C.step = 'minhas'; C.aviso = ''; if (!C.minhasTel && C.tel) C.minhasTel = C.tel; renderBk(); };
 A.bkMinBusca = () => { C.aviso = ''; renderBk(); };
-A.bkNova = (el, e) => { if (e && el && el.tagName === 'A') e.preventDefault(); bkResetForm(); renderBk(); scrollTo(0, 0); };
+A.bkNova = () => { bkResetForm(); renderBk(); scrollTo(0, 0); };
 A.bkCancelar = el => { const r = resById(el.dataset.id); r.st = 'cancelada'; r.visto = false; r.obs = (r.obs ? r.obs + '. ' : '') + 'Cancelada pelo cliente na página'; save(); C.aviso = `Reserva ${r.cod} cancelada. O horário ficou livre.`; renderBk(); };
-A.bkRemarcar = el => { const r = resById(el.dataset.id); Object.assign(C, { edit: r.id, porte: r.porte, serv: r.serv, adds: new Set(r.adds), leva: r.leva, data: r.data, ini: null, nome: r.nome, tel: r.tel, placa: r.placa, modelo: r.modelo, end: r.end || '', obs: r.obs, step: 'form', aviso: '' }); renderBk(); scrollTo(0, 0); setTimeout(() => rolarPara('bx-s2'), 0); };
+A.bkRemarcar = el => { const r = resById(el.dataset.id); Object.assign(C, { edit: r.id, porte: r.porte, serv: r.serv, adds: new Set(r.adds), leva: r.leva, data: r.data, ini: null, nome: r.nome, tel: r.tel, placa: r.placa, modelo: r.modelo, end: r.end || '', obs: r.obs, aviso: '' }); irPasso('horario'); };
 function bkConfirma() {
   const o = bkOrc(); const livres = boxesLivres(C.data, C.ini, o.dur, C.edit);
-  if (!livres.length) { C.aviso = 'Alguém acabou de reservar esse horário. Escolha outro, por favor.'; C.ini = null; renderBk(); rolarPara('bx-s2'); return; }
+  if (!livres.length) { C.ini = null; irPasso('horario'); C.aviso = 'Alguém acabou de reservar esse horário. Escolha outro, por favor.'; renderBk(); return; }
   if (C.edit) {
     const r = resById(C.edit); Object.assign(r, { serv: C.serv, porte: C.porte, adds: [...C.adds], leva: C.leva, data: C.data, ini: C.ini, box: livres[0], dur: o.dur, base: o.base, valor: o.total, plano: !!o.pl, visto: false, criado: Date.now(), obs: (r.obs ? r.obs + '. ' : '') + 'Remarcada pelo cliente na página' });
-    save(); C.done = r.id; C.editou = true; C.edit = null; C.step = 'ok'; renderBk(); scrollTo(0, 0); return;
+    save(); C.done = r.id; C.editou = true; C.edit = null; C.step = 'ok'; renderBk(); return;
   }
-  let c = bkCli(); const placa = fmtPlaca(C.placa);
+  let c = bkCli(); const placa = fmtPlaca(C.placa); const corN = corCarro(C.cor)[1];
   if (!c) { c = { id: 'c' + (UID++) + TAB.slice(0, 3), nome: C.nome.trim(), tel: dig(C.tel), veics: [], obs: '', user: true, desde: TODAY }; DB.clientes.push(c); }
-  let v = c.veics.find(x => x.placa === placa); if (!v) { v = { placa, modelo: C.modelo.trim() || 'Veículo', cor: '', porte: C.porte }; c.veics.push(v); c.user = true; }
-  const r = { id: 'r' + (UID++) + TAB.slice(0, 3), cod: codigo(), cli: c.id, nome: c.nome, tel: c.tel, placa, modelo: v.modelo, porte: C.porte, serv: C.serv, adds: [...C.adds], data: C.data, ini: C.ini, dur: o.dur, box: livres[0], base: o.base, valor: o.total, plano: !!o.pl, leva: C.leva, end: C.end, st: 'agendada', origem: 'online', lavador: null, pago: null, obs: C.obs, criado: Date.now(), visto: false, user: true };
-  DB.reservas.push(r); save(); C.done = r.id; C.editou = false; C.step = 'ok'; renderBk(); scrollTo(0, 0);
+  let v = c.veics.find(x => x.placa === placa); if (!v) { v = { placa, modelo: C.modelo.trim() || porteN(C.porte), cor: corN, porte: C.porte }; c.veics.push(v); c.user = true; }
+  const modelo = v.cor && v.modelo.toLowerCase().includes(v.cor.toLowerCase()) ? v.modelo : `${v.modelo} ${(v.cor || corN).toLowerCase()}`;
+  const r = { id: 'r' + (UID++) + TAB.slice(0, 3), cod: codigo(), cli: c.id, nome: c.nome, tel: c.tel, placa, modelo, porte: C.porte, serv: C.serv, adds: [...C.adds], data: C.data, ini: C.ini, dur: o.dur, box: livres[0], base: o.base, valor: o.total, plano: !!o.pl, leva: C.leva, end: C.end, st: 'agendada', origem: 'online', lavador: null, pago: null, obs: C.obs, criado: Date.now(), visto: false, user: true };
+  DB.reservas.push(r); save(); C.done = r.id; C.editou = false; C.step = 'ok'; renderBk();
 }
 A.bkIcs = () => {
   const r = resById(C.done); if (!r) return; const d = r.data.replace(/-/g, ''); const t0 = r.ini.replace(':', '') + '00'; const t1 = fimDe(r).replace(':', '') + '00';
