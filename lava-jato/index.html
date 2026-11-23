@@ -647,6 +647,8 @@ a.btn{text-decoration:none}
 
 
 
+
+
 /* ================= página de reserva do cliente: configurador ================= */
 body.bk-mode .app,body.bk-mode .tabbar{display:none}
 body.bk-mode{
@@ -681,6 +683,15 @@ body.bk-mode{
 .cf-link{font-size:13.5px;font-weight:600;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);white-space:nowrap}
 .cf-link:hover{background:rgba(255,255,255,.14)}
 .cf-word{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);font-family:var(--d);font-size:clamp(120px,19vw,320px);line-height:1;white-space:nowrap;color:transparent;-webkit-text-stroke:1.5px rgba(255,255,255,.11);letter-spacing:.01em;pointer-events:none;z-index:0}
+.cf-3d{position:absolute;inset:0;width:100%;height:100%;z-index:1;touch-action:pan-y;cursor:grab;display:block}
+.cf-3d:active{cursor:grabbing}
+.cf-stage.tem3d .cf-carro{display:none}
+.cf-varre{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;background:linear-gradient(100deg,transparent 38%,rgba(255,255,255,.0) 42%,rgba(235,245,255,.55) 50%,rgba(255,255,255,0) 58%,transparent 62%);background-size:260% 100%;background-position:120% 0;mix-blend-mode:screen}
+.cf-stage.tem3d.varrer .cf-varre{animation:varre3d 1.2s cubic-bezier(.5,0,.3,1)}
+@keyframes varre3d{0%{opacity:1;background-position:120% 0}100%{opacity:1;background-position:-20% 0}}
+.cf-hint{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:4;font-size:12px;color:var(--g-ink3);display:none;pointer-events:none}
+.cf-stage.tem3d .cf-hint{display:block}
+@media (max-width:900px){.cf-stage.tem3d .cf-hint{display:none}}
 .cf-carro{position:absolute;left:5%;right:5%;bottom:20%;z-index:1;display:flex;justify-content:center}
 .cf-carro svg{width:min(100%,880px);height:auto;overflow:visible;-webkit-box-reflect:below -22px linear-gradient(transparent 58%,rgba(255,255,255,.2))}
 .car{opacity:0;transform:translateX(-70px);transition:opacity .4s ease,transform .7s cubic-bezier(.2,.8,.2,1);pointer-events:none}
@@ -1913,8 +1924,15 @@ const corCarro = k => CORES_CARRO.find(c => c[0] === k) || CORES_CARRO[1];
 const corNome = (k, porte) => { const n = corCarro(k)[1].toLowerCase(); return porte === 'moto' ? n.replace(/o$/, 'a') : n; };
 const PASSOS = [['veiculo', 'Veículo'], ['servico', 'Lavagem'], ['horario', 'Horário'], ['dados', 'Seus dados']];
 const C = { step: 'veiculo', porte: null, cor: 'prata', serv: null, adds: new Set(), leva: false, data: null, ini: null, nome: '', tel: '', placa: '', modelo: '', end: '', obs: '', edit: null, done: null, minhasTel: '', aviso: '' };
+/* carrega a garagem 3D (three.js + modelos) só na página do cliente; sem ela, ficam as ilustrações */
+let G3D = null;
+function carrega3d(el) {
+  if (location.protocol === 'file:') return;
+  G3D = G3D || import('./3d/garagem.js').catch(e => { console.warn('3D indisponível', e); return null; });
+  G3D.then(() => { if (window.Garagem && document.contains(el)) window.Garagem.iniciar(el).then(ok => { if (ok) updStage(); }); });
+}
 function enterBk() { MODE = 'bk'; closeDrawer(); closePop(); closePal(); document.body.classList.add('bk-mode'); $('#bk').innerHTML = ''; renderBk(); scrollTo(0, 0); }
-function leaveBk() { MODE = 'admin'; document.body.classList.remove('bk-mode'); $('#bk').innerHTML = ''; }
+function leaveBk() { if (window.Garagem) window.Garagem.pausar(true); MODE = 'admin'; document.body.classList.remove('bk-mode'); $('#bk').innerHTML = ''; }
 const bkCli = () => cliByTel(C.tel);
 function bkOrc() { const c = bkCli(); const pl = c && C.serv && C.data ? planoAplica(c.id, C.serv, C.data, C.edit) : null; return { ...orcamento({ serv: C.serv, porte: C.porte, adds: [...C.adds], leva: C.leva, plano: !!pl }), pl }; }
 function diasBk(dur) { return Array.from({ length: +DB.cfg.diasAFrente || 14 }, (_, i) => { const d = iso(addDays(TODAY_D, i)); const h = horasDe(d); const sl = h ? slotsDe(d, dur, C.edit) : []; return { d, h, livres: sl.filter(x => x.ok).length }; }); }
@@ -1999,6 +2017,7 @@ function stageHtml() {
         <g id="cfCars">${carSvg('p')}${carSvg('m')}${carSvg('g')}${motoSvg()}</g>
       </svg>
     </div>
+    <div class="cf-varre" aria-hidden="true"></div><div class="cf-hint" aria-hidden="true">Arraste para girar</div>
     <div class="cf-placa" id="cfPlaca" aria-hidden="true"><i>BRASIL</i><b>ABC1D23</b></div>
     <div class="cf-cap" id="cfCap" aria-live="polite"></div>
     <div class="cf-tag" id="cfTag" hidden>Buscamos e levamos</div>
@@ -2017,6 +2036,7 @@ function updStage() {
   st.classList.toggle('vidros', limpo && (C.adds.has('vidros') || det));
   st.classList.toggle('aroma', limpo && C.adds.has('aroma'));
   $('#cfWord').textContent = C.porte ? curto(C.porte) : 'Seu carro';
+  if (window.Garagem) window.Garagem.set({ porte: C.porte, cor: C.porte ? corCarro(C.cor)[2] : '#6B737A', limpo, cera: limpo && (C.adds.has('cera') || det), pretinho: limpo && (C.adds.has('pretinho') || det) });
   const pl = fmtPlaca(C.placa); const pe = $('#cfPlaca'); pe.classList.toggle('on', pl.length >= 3); $('b', pe).textContent = pl || 'ABC1D23';
   $('#cfTag').hidden = !C.leva;
   const lk = $('#cfLink'); lk.dataset.a = C.step === 'minhas' ? 'bkNova' : 'bkMinhas'; lk.textContent = C.step === 'minhas' ? 'Nova reserva' : 'Minhas reservas';
@@ -2032,7 +2052,7 @@ function updStage() {
 function renderBk() {
   if (MODE !== 'bk') return;
   applyTheme(); document.title = `Agende sua lavagem · ${empresa()}`;
-  if (!$('#bk .cf')) $('#bk').innerHTML = `<div class="cf">${stageHtml()}<aside class="cf-panel" id="cfPanel"></aside></div>`;
+  if (!$('#bk .cf')) { $('#bk').innerHTML = `<div class="cf">${stageHtml()}<aside class="cf-panel" id="cfPanel"></aside></div>`; carrega3d($('#cfStage')); }
   const pan = $('#cfPanel'); const st = pan.scrollTop;
   let corpo = '', pe = '';
   if (C.step === 'minhas') corpo = bkMinhas();
